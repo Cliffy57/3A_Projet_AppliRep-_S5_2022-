@@ -66,6 +66,14 @@ public class Client {
         }
     }
 
+    public String getCodebancaire() {
+        return codebancaire;
+    }
+
+    public void setCodebancaire(String codebancaire) {
+        this.codebancaire = codebancaire;
+    }
+
     public void AjouterPanier(Produit produit)
     {
         Panier.add(produit);
