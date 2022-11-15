@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
-public class MagasinImpl extends UnicastRemoteObject implements InterfaceMagasin {
+public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface {
 
     Client current_user;    //Utilisateur du site
     private ArrayList<Magasin> ListeMagasin = new ArrayList<Magasin>();

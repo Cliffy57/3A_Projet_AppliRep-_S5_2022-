@@ -5,7 +5,7 @@ import fr.iut.serveur.modeles.Produit;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface InterfaceMagasin extends Remote {
+public interface MagasinInterface extends Remote {
 
 
     public void CoClient(String mel, String nommagasin) throws RemoteException;
