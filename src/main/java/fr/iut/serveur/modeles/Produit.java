@@ -1,6 +1,8 @@
 package fr.iut.serveur.modeles;
 
-public class Produit {
+import java.io.Serializable;
+
+public class Produit implements Serializable {
 
     int id;
     String nom;
