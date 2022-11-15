@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
-public class Interface_Magasin_Impl extends UnicastRemoteObject implements Interface_Magasin {
+public class MagasinImpl extends UnicastRemoteObject implements InterfaceMagasin {
 
     Client current_user;    //Utilisateur du site
     private ArrayList<Magasin> ListeMagasin = new ArrayList<Magasin>();
 
-    public Interface_Magasin_Impl() throws RemoteException {
+    public MagasinImpl() throws RemoteException {
     }
 
     private void Init()

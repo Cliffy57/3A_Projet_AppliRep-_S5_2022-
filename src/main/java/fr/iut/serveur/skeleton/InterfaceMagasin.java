@@ -1,12 +1,11 @@
 package fr.iut.serveur.skeleton;
 
-import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.modeles.Produit;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface Interface_Magasin extends Remote {
+public interface InterfaceMagasin extends Remote {
 
 
     public void CoClient(String mel, String nommagasin) throws RemoteException;

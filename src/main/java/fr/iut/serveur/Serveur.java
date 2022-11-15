@@ -1,6 +1,6 @@
 package fr.iut.serveur;
 
-import fr.iut.serveur.skeleton.Interface_Magasin_Impl;
+import fr.iut.serveur.skeleton.MagasinImpl;
 
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -13,7 +13,7 @@ public class Serveur {
         int port1=8001; //Port Banque
     try {
         LocateRegistry.createRegistry(port);
-        Naming.rebind("rmi://localhost:"+port+"/java", new Interface_Magasin_Impl());
+        Naming.rebind("rmi://localhost:"+port+"/java", new MagasinImpl());
         System.out.println("Serveur magasin lancé");
 
     }catch(Exception e) {
