@@ -34,10 +34,14 @@ public class MagasinImpl extends UnicastRemoteObject implements InterfaceMagasin
     }
 
     @Override
-    public void CoClient(String mel,String nommagasin) throws RemoteException {
+    public boolean CoClient(String mel,String nommagasin) throws RemoteException {
         Init();
-        vérificationclient(mel,nommagasin);
-        System.out.println("Client "+mel+" connecté");
+        if(vérificationclient(mel,nommagasin))
+        {
+            System.out.println("Client "+mel+" connecté");
+            return true;
+        }else return false;
+
     }
 
     @Override
