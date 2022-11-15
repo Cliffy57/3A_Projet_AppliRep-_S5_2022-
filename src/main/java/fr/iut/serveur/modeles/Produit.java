@@ -5,15 +5,22 @@ public class Produit {
     int id;
     String nom;
     String description;
-    String prix;
+    Double prix;
     String categorie;
     String img; //Image du produit
 
-    public Produit(int id, String nom, String description, String prix,String categorie) {
+    public Produit(int id, String nom, String description, String prix,String categorie) {//Si caté vide alors caté == "vide"
         this.id = id;
         this.nom = nom;
         this.description = description;
-        this.prix = prix;
+        this.prix = Double.valueOf(prix);
+        this.categorie = categorie;
+    }
+
+    public Produit( String nom, String description, String prix) {//Si caté vide alors caté == "vide"
+        this.nom = nom;
+        this.description = description;
+        this.prix = Double.valueOf(prix);
         this.categorie = categorie;
     }
 
@@ -41,13 +48,16 @@ public class Produit {
         this.description = description;
     }
 
-    public String getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
     public void setPrix(String prix) {
-        this.prix = prix;
+        this.prix = Double.valueOf(prix);
     }
 
-
+    @Override
+    public String toString() {
+        return "Nom : "+getNom() + "/Description : "+getDescription()+"/Prix :"+getPrix();
+    }
 }

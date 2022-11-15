@@ -1,6 +1,7 @@
 package fr.iut.client;
 
 import fr.iut.serveur.modeles.Client;
+import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.skeleton.Interface_Magasin;
 import fr.iut.serveur.skeleton.Interface_Magasin_Impl;
 
@@ -9,7 +10,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import static fr.iut.serveur.modeles.Client.listeClient;
+import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class Host { ///Contentera de lancer la vue_selection une fois que ce projet sera fini car ce sont les controleurs qui feront la co avec l'interface
 
@@ -21,7 +22,7 @@ public class Host { ///Contentera de lancer la vue_selection une fois que ce pro
 
         try {
             Interface_Magasin obj = (Interface_Magasin) Naming.lookup("rmi://localhost:"+port+"/java");
-            obj.CoClient("Mel@");
+            obj.CoClient("Mel@","FLUNCH");
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
