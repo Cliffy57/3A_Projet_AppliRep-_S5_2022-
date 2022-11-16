@@ -23,8 +23,9 @@ public class VueMagasin extends Application {  //Vue interface principale du mag
         CtrlMagasin Ctrl = fxmlLoader.getController();
 
         Ctrl.setNommagasin(nommagasin);
-
-        stage.setTitle(nommagasin);
+        Ctrl.Lancement();
+       // System.out.println(Ctrl.getNommagasin());
+        stage.setTitle("Magasin " +nommagasin);
         stage.setScene(scene);
         stage.show();
     }

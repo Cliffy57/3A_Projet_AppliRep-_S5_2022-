@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class Client {
-
+            //TODO Pour le problème de plusieurs produits identiques dans le panier, on fera le traitement au niveau du ctrlmagasin
     private int id; //Id d'un client
     private String mel;
     private String mdp;

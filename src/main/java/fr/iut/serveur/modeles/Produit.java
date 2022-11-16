@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 public class Produit implements Serializable {
 
-    int id;
+    int id; //Attribut à supprimer
     String nom;
     String description;
     Double prix;
     String categorie;
     String img; //Image du produit
+    Categories c;
 
     public Produit(int id, String nom, String description, String prix,String categorie) {//Si caté vide alors caté == "vide"
         this.id = id;
@@ -26,12 +27,27 @@ public class Produit implements Serializable {
         this.categorie = categorie;
     }
 
-    public int getId() {
-        return id;
+    public Produit(String nom, String dsc, String prix, String categorie) {
+        this.nom = nom;
+        this.description =dsc;
+        this.prix = Double.valueOf(prix);
+        this.categorie = categorie;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public Categories getC() {
+        return c;
+    }
+
+    public void setC(Categories c) {
+        this.c = c;
     }
 
     public String getNom() {

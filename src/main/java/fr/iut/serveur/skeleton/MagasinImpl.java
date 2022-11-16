@@ -1,5 +1,6 @@
 package fr.iut.serveur.skeleton;
 
+import fr.iut.serveur.modeles.Categories;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.modeles.Produit;
@@ -16,16 +17,17 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     private ArrayList<Magasin> ListeMagasin = new ArrayList<Magasin>();
 
     public MagasinImpl() throws RemoteException {
+        Init();
     }
 
     private void Init()
     {
         listeClient.add(new Client("Mel@","123"));   //Ajout d'un client à la liste de client afin d'avoir une base pour bosser
         Magasin m0 = new Magasin("FLUNCH");
-        Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09");
-        Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39");
-        Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95");
-
+        Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
+        Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
+        Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
+//        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
         m0.AjouterProduitMagasin(p1);
         m0.AjouterProduitMagasin(p2);
         m0.AjouterProduitMagasin(p3);
@@ -35,7 +37,6 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     @Override
     public boolean CoClient(String mel,String nommagasin) throws RemoteException {
-        Init();
         if(vérificationclient(mel,nommagasin))
         {
             System.out.println("Client "+mel+" connecté");
@@ -55,18 +56,23 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }
 
     @Override
-    public void ConsulterListeProduitMagasin(String nommagasin) throws RemoteException {
+    public ArrayList<Produit> ConsulterListeProduitMagasin(String nommagasin) throws RemoteException {
+        ArrayList <Produit> P = new ArrayList<>();
         for(Magasin m : ListeMagasin)
         {
+
             if(m.getNom().equals(nommagasin))
             {
                ArrayList<Produit> listeProduits=  m.getListeProduits();
                 for(Produit p : listeProduits)
                 {
-                    System.out.println(p.toString());
+                    System.out.println(p.getCategorie());
+                    P.add(p);
                 }
             }
         }
+        return P;
+
     }
 
     /**
