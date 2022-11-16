@@ -33,18 +33,18 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
 
     //TODO Hashtable<String, Compte> comptes; pour vérif que le compte appartient à la banque
     public void confirmClientId(Client client){
-        client.askId();
-        client.askPwd();
-        if(client.askId && client.askPwd ==true){
+       // client.askId();
+       // client.askPwd();
+       // if(client.askId && client.askPwd ==true){
             verifyClient(client);
-        }else{
+        //}else{
             System.out.println("Le client n'est pas solvable");
-        }
+        //}
 
     }
     public void verifyClient(Client client){
-        if(client.getCodebancaire()==codeBancaire&&client.getSolde()<=montantAchat){
+     //   if(client.getCodebancaire()==codeBancaire&&client.getSolde()<=montantAchat){
             //TODO Method -> il envoie un message de confirmation au magasin et au client.
-        }
+        //}
     }
 }

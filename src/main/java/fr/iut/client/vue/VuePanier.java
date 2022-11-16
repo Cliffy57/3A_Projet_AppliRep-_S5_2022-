@@ -12,8 +12,8 @@ public class VuePanier extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("inter1.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/panier.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 640, 400);
         stage.setTitle("Choix du magasin!");
         stage.setScene(scene);
         stage.show();

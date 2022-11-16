@@ -11,7 +11,7 @@ import java.io.IOException;
 public class VueSelection extends Application {    //Selection du magasin
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("inter1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/inter1.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
         stage.setTitle("Choix du magasin!");
         stage.setScene(scene);

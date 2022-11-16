@@ -1,7 +1,8 @@
 package fr.iut.client.controleur;
 
 import fr.iut.client.vue.VueMagasin;
-import fr.iut.serveur.skeleton.InterfaceMagasin;
+import fr.iut.serveur.modeles.ports;
+import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +26,7 @@ public class CtrlSelection implements Initializable {
     @FXML
     private Button btn_magasin2;
 
-    int port=8000;
+
 
     @Override
 
@@ -35,10 +36,11 @@ public class CtrlSelection implements Initializable {
 
     public void btn1(ActionEvent actionEvent) {
         try {
-            InterfaceMagasin Inter = (InterfaceMagasin) Naming.lookup("rmi://localhost:"+port+"/java");
+            MagasinInterface Inter = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
             if(Inter.CoClient("Mel@",btn_magasin1.getText()))
             {
-                new VueMagasin().start(new Stage());
+                VueMagasin vue = new VueMagasin(btn_magasin1.getText());
+                vue.start(new Stage());
                 fermer_fenetre(btn_magasin1);
             }
 
