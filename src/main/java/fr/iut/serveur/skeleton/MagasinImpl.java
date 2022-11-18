@@ -4,10 +4,12 @@ import fr.iut.serveur.modeles.Categories;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.modeles.Produit;
+import javafx.scene.image.Image;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
@@ -27,7 +29,10 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
         Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
         Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
-//        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
+        //p1.
+        //p2.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
+        //p3.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
+        //        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
         m0.AjouterProduitMagasin(p1);
         m0.AjouterProduitMagasin(p2);
         m0.AjouterProduitMagasin(p3);

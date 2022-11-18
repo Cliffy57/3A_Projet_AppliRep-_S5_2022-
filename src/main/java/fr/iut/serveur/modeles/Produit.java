@@ -1,5 +1,8 @@
 package fr.iut.serveur.modeles;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.Serializable;
 
 public class Produit implements Serializable {
@@ -9,8 +12,9 @@ public class Produit implements Serializable {
     String description;
     Double prix;
     String categorie;
-    String img; //Image du produit
+    Image img; //Image du produit url
     Categories c;
+    ImageView view;
 
     public Produit(int id, String nom, String description, String prix,String categorie) {//Si caté vide alors caté == "vide"
         this.id = id;
@@ -72,6 +76,25 @@ public class Produit implements Serializable {
 
     public void setPrix(String prix) {
         this.prix = Double.valueOf(prix);
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
+    public ImageView getView() {
+        return view;
+    }
+
+    public void charge()
+    {
+        this.view = new ImageView(getImg());
+        this.view.setPreserveRatio(true);
+        this.view.setFitHeight(60);
     }
 
     @Override
