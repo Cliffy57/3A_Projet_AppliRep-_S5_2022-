@@ -90,6 +90,9 @@ public class Produit implements Serializable {
         return view;
     }
 
+    /**
+     * Instancie le paramètre ImageView d'un produit et règle sa taille
+     */
     public void charge()
     {
         this.view = new ImageView(getImg());

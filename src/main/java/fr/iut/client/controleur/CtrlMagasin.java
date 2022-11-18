@@ -38,7 +38,6 @@ public class CtrlMagasin  {
 
     String nommagasin;  //Nom magasin
     ObservableList<String> CateMag ;
-    ObservableList<Produit> truc;
 
     @FXML
     private ListView<String> ListCaté;
@@ -72,10 +71,18 @@ public class CtrlMagasin  {
     }
 
     //Action sur le logo panier
-    public void gotoGoogle() throws IOException {
+
+    /**
+     * Lance l'interface du Panier lors du click sur le logo
+     * @throws IOException si un problème lors du lancement de l'interface
+     */
+    public void LanceVuePanier() throws IOException {
         new VuePanier().start(new Stage());
     }
 
+    /**
+     * Initialise l'interface du magasin
+     */
     public void Lancement()
     {
         chargerlogopanier();
@@ -85,7 +92,10 @@ public class CtrlMagasin  {
 
     }
 
-    public void chargeproduitdanstableau()
+    /**
+     * Permet de charger les produits dans le tableau
+     */
+    private void chargeproduitdanstableau()
     {
         try {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
@@ -94,18 +104,11 @@ public class CtrlMagasin  {
             colNom.setCellValueFactory(new PropertyValueFactory<Produit, String>("nom"));
             colDescription.setCellValueFactory(new PropertyValueFactory<Produit,String>("description"));
             colPrix.setCellValueFactory(new PropertyValueFactory<Produit,Double>("prix"));
-           table_produit.getColumns().setAll(colImage,colNom,colDescription,colPrix);
-           temp(ProduitsDansMagasin);
-            table_produit.getItems().addAll(ProduitsDansMagasin);   //TODO Ajouter des listeners sur les cellules de ce tableview
+            table_produit.getColumns().setAll(colImage,colNom,colDescription,colPrix);
+
+            ChargeImageView(ProduitsDansMagasin);
+            table_produit.getItems().addAll(ProduitsDansMagasin);   //Ajoute les produits dans le table view
             Attributcategorie(ProduitsDansMagasin);
-            //table_produit.getSelectionModel().getSelectedCells().addListener();
-
-        //addListener(new ListChangeListener<Produit>(){
-
-
-
-
-            //tblproducts.getSelectionModel().selectedIndexProperty().addListener(this);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -116,16 +119,24 @@ public class CtrlMagasin  {
         }
     }
 
-    private void temp(ArrayList<Produit> ca) {//Charge les ImageView du produit Image
-        for (Produit p :ca
+    /**
+     *Charge les ImageView (Logo des produits) dans le tableview
+     * @param listeProduit : ArrayList de produit à afficher
+     */
+    private void ChargeImageView(ArrayList<Produit> listeProduit) {//Charge les ImageView du produit Image
+        for (Produit p :listeProduit
              ) {
-            p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
+            p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));   //Le produit.class deviendra p.geturl
             p.charge();
             //colImage.setGraphic(p.getView());
         }
     }
 
-    public void Attributcategorie(ArrayList<Produit> liste)
+    /**
+     * Permet de charger les catégories dans la listview de manière unique
+     * @param liste : Liste des produits du table view
+     */
+    private void Attributcategorie(ArrayList<Produit> liste)
     {
         ArrayList<String> listecateg = new ArrayList<>();
         Set<String> uniqueGas = new HashSet<String>(listecateg);
@@ -136,24 +147,34 @@ public class CtrlMagasin  {
                 uniqueGas.add(p.getCategorie());
             }
         }
-        CateMag = observableArrayList(uniqueGas);
+        CateMag = observableArrayList(uniqueGas);//Liste caté filtrée sans doublon
 
-        ListCaté.setItems(CateMag);
+        ListCaté.setItems(CateMag); //Ajoute les catégories dans la listView
 
+        ListViewClickFiltre(liste);
+
+
+    }
+
+    /**
+     * Permet d'ajouter un listener sur la listeview : Filtre les produits en fonction des c&tgories
+     * @param liste : ArrayList de produit de la table view
+     */
+    private void ListViewClickFiltre(ArrayList<Produit> liste) {
         ListCaté.setOnMouseClicked(event -> {
             ListCaté.getSelectionModel().getSelectedItem(); //Récup l'item selectionné donc dans notre cas ça veut le nom de la caté
             ObservableList<Produit> m = observableArrayList(liste) ;
             FilteredList<Produit> f = new FilteredList<>(m);
             SortedList<Produit> sortable = new SortedList<>(f);
-          //  table_produit.setItems(sortable);
             f.predicateProperty().bind(Bindings.createObjectBinding(() -> categorie -> categorie.getCategorie().equals(ListCaté.getSelectionModel().getSelectedItem())));
             table_produit.setItems(f);
-          //  System.out.println(table_produit.getItems().stream().sorted());
-
         });
-
     }
-    public void chargerlogopanier()
+
+    /**
+     * Charge le logo du panier
+     */
+    private void chargerlogopanier()
     {
         String chemin = String.valueOf(getClass().getResource("image/panier.png"));
 
@@ -165,6 +186,9 @@ public class CtrlMagasin  {
         logo_panier.setGraphic(view);
     }
 
+    /**
+     * Met à jour la partie détails de l'interface en fonction du choix de l'utilisateur
+     */
     public void test_click()    //Quand on click sur la table view
     {
         //System.out.println(table_produit.getSelectionModel().getSelectedItem().getNom());
@@ -173,7 +197,9 @@ public class CtrlMagasin  {
         Dts_nom.setText(table_produit.getSelectionModel().getSelectedItem().getNom());
         dts_dsc.setWrapText(true);
         Dts_nom.setWrapText(true);
+        dts_dsc.setEditable(false);
+        Dts_nom.setEditable(false);
     }
-
+    //TODO insérer bouton ajout du panier +fonction
 
 }

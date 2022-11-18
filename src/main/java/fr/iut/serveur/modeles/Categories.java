@@ -23,5 +23,5 @@ public class Categories implements Serializable {
         return nom;
 
     }
-    //TODO Classe catégorie à supprimer svp c'était une idée de merde d'en faire une classe à part Cordialement (sauf pour l'observavble list)
+    //TODO Classe catégorie à supprimer svp c'était une idée de merde d'en faire une classe à part Cordialement
 }
