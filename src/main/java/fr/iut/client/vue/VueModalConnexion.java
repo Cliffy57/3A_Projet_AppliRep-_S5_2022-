@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Vue modal de la connexion
+ */
 public class VueModalConnexion extends Application {  //Vue interface principale du magasin
     String nommagasin;
 
@@ -22,10 +25,10 @@ public class VueModalConnexion extends Application {  //Vue interface principale
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         CtrlModalCo Ctrl = fxmlLoader.getController();
 
-        //Ctrl.setNommagasin(nommagasin);
+        Ctrl.setNommagasin(nommagasin);
         //Ctrl.Lancement();
 
-        stage.setTitle("Magasin " + nommagasin);
+        stage.setTitle("Connexion à " + nommagasin);
         stage.setScene(scene);
         stage.show();
     }
