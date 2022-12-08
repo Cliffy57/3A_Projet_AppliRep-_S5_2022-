@@ -17,11 +17,15 @@ public class Client {
 
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
 
+
     public Client(String mel, String mdp)  //La renforcer en mode michel après
     {
-        this.id=listeClient.size()+1;
-        this.mel=mel;
-        this.mdp=mdp;
+        if(!mel.isEmpty()&&!mdp.isEmpty())
+        {
+            this.id=listeClient.size()+1;
+            this.mel=mel.trim();
+            this.mdp=mdp.trim();
+        }else throw new IllegalArgumentException("Le champ mail ou mdp est vide");
     }
 
     public int getId() {
@@ -56,9 +60,12 @@ public class Client {
         this.solde = solde;
     }
 
+    public ArrayList<Produit> getPanier() {
+        return Panier;
+    }
 
 
-    public void ConsultePanier()    //Retour à modifier par la suite
+    public void ConsultePanier()    //Retour à modifier par la suite pour la vue panier
     {
         for(Produit p : Panier)
         {
@@ -74,9 +81,28 @@ public class Client {
         this.codebancaire = codebancaire;
     }
 
+    /**
+     * Ajoute un produit au panier
+     * @param produit
+     */
     public void AjouterPanier(Produit produit)
     {
         Panier.add(produit);
+    }
+
+    public double CalculSommePanier()
+    {
+        double somme= 0;
+        if(this.getPanier().isEmpty()) return somme;
+        else
+        {
+
+            for(Produit p : Panier)
+            {
+                somme += p.getPrix();
+            }
+        }
+        return somme;
     }
 
 }

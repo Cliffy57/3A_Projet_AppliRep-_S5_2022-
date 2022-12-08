@@ -1,22 +1,15 @@
 package fr.iut.client.controleur;
 
-import fr.iut.client.vue.VueMagasin;
 import fr.iut.client.vue.VuePanier;
-import fr.iut.projet.HelloApplication;
-import fr.iut.serveur.modeles.Categories;
+import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
 import fr.iut.serveur.modeles.ports;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -37,8 +30,11 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class CtrlMagasin  {
 
     String nommagasin;  //Nom magasin
+    Client user_co = new Client("Mel2","123"); //le new est temporaire
     ObservableList<String> CateMag ;
 
+
+    @FXML private Label nom_user;
     @FXML
     private ListView<String> ListCaté;
 
@@ -62,9 +58,15 @@ public class CtrlMagasin  {
 
     @FXML private Label dts_val;
 
+    @FXML private Button btn_ajout_panier;
+
     public String getNommagasin() {
         return nommagasin;
     }
+
+    public Client getUser_co(){ return user_co;}
+
+    public void setUser_co(Client user){ this.user_co = user;}
 
     public void setNommagasin(String nommagasin) {
         this.nommagasin = nommagasin;
@@ -77,7 +79,38 @@ public class CtrlMagasin  {
      * @throws IOException si un problème lors du lancement de l'interface
      */
     public void LanceVuePanier() throws IOException {
-        new VuePanier().start(new Stage());
+        try
+        {
+            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+            new VuePanier(user_co).start(new Stage());
+        }catch(Exception e){
+            System.out.println("Une erreur est advenue lors du lancement du panier "+e);
+        }
+
+
+        //new VuePanier(user_co).start(new Stage());
+    }
+
+    /**
+     * Action lors du click utilisateur sur le bouton Ajouter au panier
+     */
+    public void Ajout_panier() throws MalformedURLException, NotBoundException, RemoteException {
+        MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+        //M.
+        if(M.CoClient("Mel@",nommagasin)) { //SI client est co et appartient verif useless now
+
+            Produit p = new Produit(
+                    table_produit.getSelectionModel().getSelectedItem().getNom(),
+                    table_produit.getSelectionModel().getSelectedItem().getDescription(),
+                    String.valueOf(table_produit.getSelectionModel().getSelectedItem().getPrix()),
+                    table_produit.getSelectionModel().getSelectedItem().getCategorie()
+            );
+            M.AjoutProduit(p);
+
+            //System.out.println(M);
+        }else {
+            System.out.println("Client non reconnu");
+        }
     }
 
     /**
@@ -89,7 +122,8 @@ public class CtrlMagasin  {
         System.out.println(nommagasin);
         nom_magasin.setText(getNommagasin());
         chargeproduitdanstableau();
-
+        btn_ajout_panier.setDisable(true);
+        user_co = null;
     }
 
     /**
@@ -99,7 +133,8 @@ public class CtrlMagasin  {
     {
         try {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-            ArrayList<Produit> ProduitsDansMagasin = M.ConsulterListeProduitMagasin(nommagasin);//TODO mettre ça en fonction qui renvoie l'arraylist pour
+            ArrayList<Produit> ProduitsDansMagasin = M.ConsulterListeProduitMagasin(nommagasin);
+
             colImage.setCellValueFactory(new PropertyValueFactory<Produit,ImageView>("view"));
             colNom.setCellValueFactory(new PropertyValueFactory<Produit, String>("nom"));
             colDescription.setCellValueFactory(new PropertyValueFactory<Produit,String>("description"));
@@ -153,7 +188,6 @@ public class CtrlMagasin  {
 
         ListViewClickFiltre(liste);
 
-
     }
 
     /**
@@ -199,7 +233,9 @@ public class CtrlMagasin  {
         Dts_nom.setWrapText(true);
         dts_dsc.setEditable(false);
         Dts_nom.setEditable(false);
+        btn_ajout_panier.setDisable(false);
     }
-    //TODO insérer bouton ajout du panier +fonction
+
+
 
 }

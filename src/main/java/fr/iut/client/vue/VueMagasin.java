@@ -2,6 +2,7 @@ package fr.iut.client.vue;
 
 import fr.iut.client.controleur.CtrlMagasin;
 import fr.iut.projet.HelloApplication;
+import fr.iut.serveur.modeles.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

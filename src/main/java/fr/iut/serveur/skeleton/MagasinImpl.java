@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Semaphore;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
@@ -53,6 +54,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     @Override
     public void AjoutProduit(Produit p) throws RemoteException {
         current_user.AjouterPanier(p);
+        System.out.println("Produit Ajouté pour le client:"+current_user.getMel());
     }
 
     @Override
@@ -80,6 +82,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     }
 
+    //TODO Fonction à renforcer via mdp
     /**
      * Vérifie si un client est présent dans la liste des clients
      * @param mel : Adresse mel du client
@@ -106,4 +109,29 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     }
 
+    /**
+     * AJoute un client au magasin
+     * @param mail
+     * @param motdepasse
+     * @throws RemoteException
+     */
+    public void AjoutClient(String mail,String motdepasse) throws RemoteException
+    {
+        listeClient.add(new Client(mail,motdepasse));
+    }
+
+    /**
+     * Calcule la somme du panier
+     * @param cl
+     * @throws RemoteException
+     */
+    @Override
+    public double CalcSommeProduit(Client cl) throws RemoteException {
+        if(cl != null)
+        {
+            return cl.CalculSommePanier();
+        }else throw new IllegalArgumentException("Le client est null");
+    }
+
 }
+
