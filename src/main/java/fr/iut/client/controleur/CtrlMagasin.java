@@ -82,7 +82,8 @@ public class CtrlMagasin  {
         try
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-            new VuePanier(user_co).start(new Stage());
+            System.out.println(user_co.toString());
+            new VuePanier(getUser_co()).start(new Stage());
         }catch(Exception e){
             System.out.println("Une erreur est advenue lors du lancement du panier "+e);
         }
@@ -97,7 +98,7 @@ public class CtrlMagasin  {
     public void Ajout_panier() throws MalformedURLException, NotBoundException, RemoteException {
         MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
         //M.
-        if(M.CoClient("Mel@",nommagasin)) { //SI client est co et appartient verif useless now
+      //  if(M.CoClient("Mel@",nommagasin)) { //SI client est co et appartient verif useless now
 
             Produit p = new Produit(
                     table_produit.getSelectionModel().getSelectedItem().getNom(),
@@ -123,7 +124,7 @@ public class CtrlMagasin  {
         nom_magasin.setText(getNommagasin());
         chargeproduitdanstableau();
         btn_ajout_panier.setDisable(true);
-        user_co = null;
+
     }
 
     /**
@@ -133,6 +134,7 @@ public class CtrlMagasin  {
     {
         try {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+            setUser_co(M.RecupereClientActuel());
             ArrayList<Produit> ProduitsDansMagasin = M.ConsulterListeProduitMagasin(nommagasin);
 
             colImage.setCellValueFactory(new PropertyValueFactory<Produit,ImageView>("view"));

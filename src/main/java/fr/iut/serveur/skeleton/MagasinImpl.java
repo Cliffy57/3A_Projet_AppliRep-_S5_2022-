@@ -133,5 +133,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         }else throw new IllegalArgumentException("Le client est null");
     }
 
+    public Client RecupereClientActuel() throws RemoteException{
+        return current_user;
+    }
 }
 
