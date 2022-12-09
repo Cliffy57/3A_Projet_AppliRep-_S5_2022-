@@ -109,9 +109,7 @@ public class CtrlMagasin  {
             M.AjoutProduit(p);
 
             //System.out.println(M);
-        }else {
-            System.out.println("Client non reconnu");
-        }
+
     }
 
     /**
