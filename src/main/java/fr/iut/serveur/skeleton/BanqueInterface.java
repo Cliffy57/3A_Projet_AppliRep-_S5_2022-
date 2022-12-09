@@ -1,10 +1,9 @@
 package fr.iut.serveur.skeleton;
 
-import fr.iut.serveur.modeles.Client;
-import fr.iut.serveur.modeles.Produit;
+        import fr.iut.serveur.modeles.Client;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+        import java.rmi.Remote;
+        import java.rmi.RemoteException;
 
 public interface BanqueInterface extends Remote {
     public void confirmClientId(Client client);

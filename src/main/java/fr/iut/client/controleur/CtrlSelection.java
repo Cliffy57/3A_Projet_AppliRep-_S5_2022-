@@ -1,6 +1,7 @@
 package fr.iut.client.controleur;
 
 import fr.iut.client.vue.VueMagasin;
+import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.modeles.ports;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
@@ -42,7 +43,14 @@ public class CtrlSelection implements Initializable {
 
                 vue.start(new Stage());
                 fermer_fenetre(btn_magasin1);
+                Magasin magasin = new Magasin();
+                MagasinThread t1 = new MagasinThread(magasin);
+                t1.setName("Thread 1");
+                t1.start();
+                System.out.println(t1.getId());
+
             }
+
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -64,5 +72,19 @@ public class CtrlSelection implements Initializable {
     {
         Stage stage=(Stage) btn.getScene().getWindow();
         stage.close();
+    }
+    class Magasin{
+        public void connexionAuMagasin(){
+            System.out.println("Ouverture du magasin effectuée");
+        }
+    }
+    private class MagasinThread extends Thread{
+        private Magasin magasinThread;
+        public MagasinThread(Magasin magasin){
+            magasinThread = magasin;
+        }
+        public void run(){
+            magasinThread.connexionAuMagasin();
+        }
     }
 }
