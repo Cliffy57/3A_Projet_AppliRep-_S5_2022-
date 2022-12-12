@@ -39,7 +39,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         m0.AjouterProduitMagasin(p3);
         ListeMagasin.add(m0);
 
-    }
+    }//TODO FAIRE UN INIT EN DEHORS DE CETTE CLASSE ET CALL CETTE FONCTION GENRE LA RENDRE STATIC MEC
 
     @Override
     public boolean CoClient(String mel,String nommagasin) throws RemoteException {

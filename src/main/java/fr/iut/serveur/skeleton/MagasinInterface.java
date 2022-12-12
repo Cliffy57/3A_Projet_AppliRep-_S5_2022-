@@ -16,7 +16,7 @@ public interface MagasinInterface extends Remote {
     public ArrayList<Produit> ConsulterListeProduitMagasin(String nommagasin) throws RemoteException;//Consulter la liste des produits existant du magasin
     public void AjoutClient(String mail, String motdepasse) throws RemoteException; //Ajoute un nouveau client au magasin
     public double CalcSommeProduit(Client cl) throws RemoteException;   //Calcule la somme du panier d'un client
-// TODO Soit on laisse ce getter soit lorsqu'on build le ctrl du magasin on recup en plus du nom l'object client mais risque de doublons parce qu'on a un truc client dans le ctrl et dans l'impl
+// TODO FZIRE CA:Soit on laisse ce getter soit lorsqu'on build le ctrl du magasin on recup en plus du nom l'object client mais risque de doublons parce qu'on a un truc client dans le ctrl et dans l'impl
     //TODO Faire un paiement donc établir la co avec l'autre interface
 
 }
