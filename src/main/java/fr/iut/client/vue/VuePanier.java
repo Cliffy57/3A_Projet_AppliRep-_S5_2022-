@@ -26,7 +26,7 @@ public class VuePanier extends Application {
         Ctrl.setPanierCtrl(c.getPanier());
         Ctrl.chargement();
 
-        stage.setTitle("Choix du magasin!");
+        stage.setTitle("Votre panier");
         stage.setScene(scene);
         stage.show();
     }

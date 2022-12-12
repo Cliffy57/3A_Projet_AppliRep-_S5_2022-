@@ -83,6 +83,7 @@ public class CtrlMagasin  {
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
             System.out.println(user_co.toString());
+            user_co.ConsultePanier();
             new VuePanier(getUser_co()).start(new Stage());
         }catch(Exception e){
             System.out.println("Une erreur est advenue lors du lancement du panier "+e);
@@ -107,6 +108,8 @@ public class CtrlMagasin  {
                     table_produit.getSelectionModel().getSelectedItem().getCategorie()
             );
             M.AjoutProduit(p);
+        System.out.println("Ajout produit au client "+user_co.getMdp());
+        //user_co.ConsultePanier();
 
             //System.out.println(M);
 
@@ -133,6 +136,7 @@ public class CtrlMagasin  {
         try {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
             setUser_co(M.RecupereClientActuel());
+            nom_user.setText(user_co.getMel());
             ArrayList<Produit> ProduitsDansMagasin = M.ConsulterListeProduitMagasin(nommagasin);
 
             colImage.setCellValueFactory(new PropertyValueFactory<Produit,ImageView>("view"));

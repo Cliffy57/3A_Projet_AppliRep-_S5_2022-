@@ -104,4 +104,12 @@ public class Produit implements Serializable {
     public String toString() {
         return "Nom : "+getNom() + "/Description : "+getDescription()+"/Prix :"+getPrix();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Produit) {
+         if(((Produit) obj).getNom() == this.getNom())   return true;
+        }
+         return false;
+    }
 }
