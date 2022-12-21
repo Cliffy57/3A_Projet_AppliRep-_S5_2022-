@@ -18,5 +18,9 @@ public interface MagasinInterface extends Remote {
     public double CalcSommeProduit(Client cl) throws RemoteException;   //Calcule la somme du panier d'un client
     public Client RecupereClientActuel() throws RemoteException;// TODO Soit on laisse ce getter soit lorsqu'on build le ctrl du magasin on recup en plus du nom l'object client mais risque de doublons parce qu'on a un truc client dans le ctrl et dans l'impl
     //TODO Faire un paiement donc établir la co avec l'autre interface
-
+    double getPrice(String item) throws RemoteException;
+    void order(String item) throws RemoteException;
+    String getnom() throws  RemoteException;
+    void placeOrder(String username) throws RemoteException;
+    public void addItem(String item, double price) throws RemoteException;
 }

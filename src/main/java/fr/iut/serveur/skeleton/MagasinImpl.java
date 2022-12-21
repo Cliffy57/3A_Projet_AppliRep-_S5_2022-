@@ -1,14 +1,13 @@
 package fr.iut.serveur.skeleton;
 
-import fr.iut.serveur.modeles.Categories;
-import fr.iut.serveur.modeles.Client;
-import fr.iut.serveur.modeles.Magasin;
-import fr.iut.serveur.modeles.Produit;
+import fr.iut.serveur.modeles.*;
 import javafx.scene.image.Image;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Semaphore;
 
@@ -18,14 +17,23 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     Client current_user;    //Utilisateur du site
     private ArrayList<Magasin> ListeMagasin = new ArrayList<Magasin>();
+    private Map<String, Double> prices;
+    private String nom;
 
-    public MagasinImpl() throws RemoteException {
+    public String getNom() {
+        return nom;
+    }
+
+    public MagasinImpl(String nom) throws RemoteException {
         Init();
+        this.nom = nom;
+        this.prices = new HashMap<>();
     }
 
     private void Init()
     {
         listeClient.add(new Client("Mel@","123"));   //Ajout d'un client à la liste de client afin d'avoir une base pour bosser
+        listeClient.add(new Client("hugo3@google.com","swage"));
         Magasin m0 = new Magasin("FLUNCH");
         Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
         Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
@@ -135,6 +143,38 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     public Client RecupereClientActuel() throws RemoteException{
         return current_user;
+    }
+
+
+
+    @Override
+    public double getPrice(String item) throws RemoteException {
+        return prices.getOrDefault(item, 0.0);
+    }
+
+    @Override
+    public void order(String item) throws RemoteException {
+        if (!prices.containsKey(item)) {
+            throw new RemoteException("Item not found: " + item);
+        }
+        // Process the order
+        System.out.println("Order placed for item: " + item +" price :"+ getPrice(item));
+    }
+
+    @Override
+    public String getnom() throws RemoteException {
+        return nom;
+    }
+    @Override
+    public void placeOrder(String username) throws RemoteException {
+        // Store the username in the order object
+        Order order = new Order(username);
+    }
+
+
+    @Override
+    public void addItem(String item, double price) {
+        prices.put(item, price);
     }
 }
 

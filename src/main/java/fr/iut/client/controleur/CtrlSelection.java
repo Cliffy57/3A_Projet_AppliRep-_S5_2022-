@@ -1,8 +1,9 @@
 package fr.iut.client.controleur;
 
 import fr.iut.client.vue.VueMagasin;
-import fr.iut.serveur.modeles.Magasin;
 import fr.iut.serveur.modeles.ports;
+import fr.iut.serveur.skeleton.BanqueImpl;
+import fr.iut.serveur.skeleton.MagasinImpl;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +17,12 @@ import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UID;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+
 
 public class CtrlSelection implements Initializable {
 
@@ -32,59 +38,80 @@ public class CtrlSelection implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //String result = performLongRunningTask();
+
+
+        // Print the ID to the console
+
+        // Generate a unique ID for the client
+
     }
 
     public void btn1(ActionEvent actionEvent) {
-        try {
-            MagasinInterface Inter = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-            if(Inter.CoClient("Mel@",btn_magasin1.getText()))   //TODO Ce if est à décaler lors d'un ajout d'un panier
-            {
-                VueMagasin vue = new VueMagasin(btn_magasin1.getText());
+        //  MagasinInterface Inter = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+        //if(Inter.CoClient("Mel@",btn_magasin1.getText()))   //TODO Ce if est à décaler lors d'un ajout d'un panier
+        // if(Inter.CoClient("hugo3@google.com",btn_magasin1.getText()))
+        {
+            // Perform a long-running task in a background thread
 
-                vue.start(new Stage());
-                fermer_fenetre(btn_magasin1);
-                Magasin magasin = new Magasin();
-                MagasinThread t1 = new MagasinThread(magasin);
-                t1.setName("Thread 1");
-                t1.start();
-                System.out.println(t1.getId());
+            try {
+              Registry  registry = LocateRegistry.getRegistry();
 
+                System.out.println(registry.lookup("shop"));
+
+               // MagasinInterface shop2 = (MagasinInterface) registry.lookup("shop");
+               // System.out.println("by");
+               MagasinInterface  shop = (MagasinInterface) registry.lookup("shop");
+               //MagasinImpl shop = (MagasinImpl) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+                System.out.println( shop.getnom());
+
+//                   MagasinInterface Inter = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
+
+
+
+                BanqueImpl bank = new BanqueImpl("8001");
+                shop.addItem("book", 19.99);
+                shop.addItem("pen", 0.99);
+
+                // Invoke the remote methods
+                UID clientId = new UID();
+                System.out.println("Client ID: " + clientId);
+                // String name = shop.getName();
+                double price = shop.getPrice("book");
+                shop.placeOrder(String.valueOf(clientId));
+                shop.order("book");
+            } catch (RemoteException | NotBoundException e) {
+                e.printStackTrace();
             }
+/*
+            VueMagasin vue = new VueMagasin(btn_magasin1.getText());
 
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            vue.start(new Stage());
+            fermer_fenetre(btn_magasin1);
+*/
         }
+
+
     }
 
     public void btn2(ActionEvent actionEvent) {
+
+            // Perform a long-running task in a background thread
+            new Thread(() -> {
+             //   String result = performLongRunningTask();
+
+                // Update the GUI on the JavaFX application thread
+                Platform.runLater(() -> {
+                   // label.setText(result);
+                });
+            }).start();
 
         fermer_fenetre(btn_magasin2);
     }
 
     private void fermer_fenetre(Button btn)   //Possibilité de micheliser tout ça avec juste un attribut Button btn
     {
-        Stage stage=(Stage) btn.getScene().getWindow();
+        Stage stage = (Stage) btn.getScene().getWindow();
         stage.close();
-    }
-    class Magasin{
-        public void connexionAuMagasin(){
-            System.out.println("Ouverture du magasin effectuée");
-        }
-    }
-    private class MagasinThread extends Thread{
-        private Magasin magasinThread;
-        public MagasinThread(Magasin magasin){
-            magasinThread = magasin;
-        }
-        public void run(){
-            magasinThread.connexionAuMagasin();
-        }
     }
 }
