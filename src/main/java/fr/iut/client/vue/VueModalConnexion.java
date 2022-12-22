@@ -1,7 +1,6 @@
 package fr.iut.client.vue;
 
-import fr.iut.client.controleur.CtrlMagasin;
-import fr.iut.client.controleur.CtrlModalCo;
+import fr.iut.client.controleur.CtrlModalDeConnexion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

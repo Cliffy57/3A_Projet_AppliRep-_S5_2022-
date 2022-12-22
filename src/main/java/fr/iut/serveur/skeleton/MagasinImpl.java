@@ -1,15 +1,12 @@
 package fr.iut.serveur.skeleton;
 
 import fr.iut.serveur.modeles.*;
-import javafx.scene.image.Image;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.Semaphore;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
@@ -42,15 +39,15 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         //p2.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //p3.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
-        m0.AjouterProduitMagasin(p1);
-        m0.AjouterProduitMagasin(p2);
-        m0.AjouterProduitMagasin(p3);
-        ListeMagasin.add(m0);
+        m0.ajouterProduitMagasin(p1);
+        m0.ajouterProduitMagasin(p2);
+        m0.ajouterProduitMagasin(p3);
+        listeMagasin.add(m0);
 
     }
 
     @Override
-    public boolean CoClient(String mel,String nommagasin) throws RemoteException {
+    public boolean coClient(String mel, String nommagasin) throws RemoteException {
         if(vérificationclient(mel,nommagasin))
         {
             System.out.println("Client "+mel+" connecté");
@@ -60,18 +57,18 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }
 
     @Override
-    public void AjoutProduit(Produit p) throws RemoteException {
-        current_user.AjouterPanier(p);
-        System.out.println("Produit Ajouté pour le client:"+current_user.getMel());
+    public void ajoutProduit(Produit p) throws RemoteException {
+        currentUser.AjouterPanier(p);
+        System.out.println("Produit Ajouté pour le client:"+ currentUser.getMel());
     }
 
     @Override
-    public void ConsulterPanier() throws RemoteException {
-        current_user.ConsultePanier();
+    public void consulterPanier() throws RemoteException {
+        currentUser.ConsultePanier();
     }
 
     @Override
-    public ArrayList<Produit> ConsulterListeProduitMagasin(String nommagasin) throws RemoteException {
+    public ArrayList<Produit> consulterListeProduitMagasin(String nommagasin) throws RemoteException {
         ArrayList <Produit> P = new ArrayList<>();
         for(Magasin m : ListeMagasin)
         {
@@ -123,7 +120,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
      * @param motdepasse
      * @throws RemoteException
      */
-    public void AjoutClient(String mail,String motdepasse) throws RemoteException
+    public void ajoutClient(String mail, String motdepasse) throws RemoteException
     {
         listeClient.add(new Client(mail,motdepasse));
     }
@@ -134,7 +131,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
      * @throws RemoteException
      */
     @Override
-    public double CalcSommeProduit(Client cl) throws RemoteException {
+    public double calcSommeProduit(Client cl) throws RemoteException {
         if(cl != null)
         {
             return cl.CalculSommePanier();

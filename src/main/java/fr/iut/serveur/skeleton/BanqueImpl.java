@@ -23,12 +23,12 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
      * @throws RemoteException if failed to export object
      * @since 1.2
      */
-    String name;
+    String nomBanque;
     public BanqueImpl(String name) throws RemoteException {
         super();
-        this.name=name;
-        Hashtable<Integer, Client> b = new Hashtable<>();
-        b.put(1,new Client("hugo@google.com","swage"));
+        this.nomBanque =name;
+        Hashtable<Integer, Client> integerClientHashtable = new Hashtable<>();
+        integerClientHashtable.put(1,new Client("hugo@google.com","swage"));
     }
 
     Client client = new Client("hugo3@google.com","swage");
@@ -36,13 +36,8 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
 
     //TODO Hashtable<String, Compte> comptes; pour vérif que le compte appartient à la banque
     public void confirmClientId(Client client){
-       // client.askId();
-       // client.askPwd();
-       // if(client.askId && client.askPwd ==true){
             verifyClient(client);
-        //}else{
             System.out.println("Le client n'est pas solvable");
-        //}
 
     }
     public void verifyClient(Client client){

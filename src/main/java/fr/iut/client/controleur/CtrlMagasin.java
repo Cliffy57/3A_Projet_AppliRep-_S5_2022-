@@ -8,7 +8,6 @@ import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,9 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -27,22 +24,22 @@ import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class CtrlMagasin  {
+public class CtrlMagasin {
 
-    String nommagasin;  //Nom magasin
-    Client user_co = new Client("Mel2","123"); //le new est temporaire
-    ObservableList<String> CateMag ;
+    String nomMagasin;
+    Client userCo = new Client("Mel2","123");
 
+    ObservableList<String> cateMag;
 
     @FXML private Label nom_user;
-    @FXML
-    private ListView<String> ListCaté;
+
+    @FXML private ListView<String> listeCaté;
 
     @FXML private Hyperlink logo_panier;
 
     @FXML private Label nom_magasin;
 
-    @FXML private TableView<Produit> table_produit;
+    @FXML private TableView<Produit> tableProduit;
 
     @FXML private TableColumn<Produit, ImageView> colImage = new TableColumn<>("Image");
 
@@ -52,33 +49,31 @@ public class CtrlMagasin  {
 
     @FXML private TableColumn<Produit, Double> colPrix = new TableColumn<>("Prix");
 
-    @FXML private TextArea Dts_nom;
+    @FXML private TextArea dtsNom;
 
-    @FXML private TextArea dts_dsc;
+    @FXML private TextArea dtsDsc;
 
-    @FXML private Label dts_val;
+    @FXML private Label dtsVal;
 
-    @FXML private Button btn_ajout_panier;
+    @FXML private Button btnAjoutPanier;
 
-    public String getNommagasin() {
-        return nommagasin;
+    public String getNomMagasin() {
+        return nomMagasin;
     }
 
-    public Client getUser_co(){ return user_co;}
+    public Client getUserCo(){ return userCo;}
 
-    public void setUser_co(Client user){ this.user_co = user;}
+    public void setUserCo(Client user){ this.userCo = user;}
 
-    public void setNommagasin(String nommagasin) {
-        this.nommagasin = nommagasin;
+    public void setNomMagasin(String nomMagasin) {
+        this.nomMagasin = nomMagasin;
     }
-
-    //Action sur le logo panier
 
     /**
      * Lance l'interface du Panier lors du click sur le logo
      * @throws IOException si un problème lors du lancement de l'interface
      */
-    public void LanceVuePanier() throws IOException {
+    public void lanceVuePanier() throws IOException {
         try
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
@@ -88,13 +83,11 @@ public class CtrlMagasin  {
         }catch(Exception e){
             System.out.println("Une erreur est advenue lors du lancement du panier "+e);
         }
-
-
-        //new VuePanier(user_co).start(new Stage());
     }
 
     /**
      * Action lors du click utilisateur sur le bouton Ajouter au panier
+     * @throws MalformedURLException,NotBoundException,RemoteException
      */
     public void Ajout_panier() throws MalformedURLException, NotBoundException, RemoteException {
         MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
@@ -102,30 +95,25 @@ public class CtrlMagasin  {
       //  if(M.CoClient("Mel@",nommagasin)) { //SI client est co et appartient verif useless now
 
             Produit p = new Produit(
-                    table_produit.getSelectionModel().getSelectedItem().getNom(),
-                    table_produit.getSelectionModel().getSelectedItem().getDescription(),
-                    String.valueOf(table_produit.getSelectionModel().getSelectedItem().getPrix()),
-                    table_produit.getSelectionModel().getSelectedItem().getCategorie()
+                    tableProduit.getSelectionModel().getSelectedItem().getNom(),
+                    tableProduit.getSelectionModel().getSelectedItem().getDescription(),
+                    String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()),
+                    tableProduit.getSelectionModel().getSelectedItem().getCategorie()
             );
-            M.AjoutProduit(p);
-        System.out.println("Ajout produit au client "+user_co.getMdp());
-        //user_co.ConsultePanier();
-
-            //System.out.println(M);
-
+            M.ajoutProduit(p);
+        System.out.println("Ajout produit au client "+ userCo.getMdp());
     }
 
     /**
      * Initialise l'interface du magasin
      */
-    public void Lancement()
+    public void lancement()
     {
-        chargerlogopanier();
-        System.out.println(nommagasin);
-        nom_magasin.setText(getNommagasin());
+        chargeLogoPanier();
+        System.out.println(nomMagasin);
+        nom_magasin.setText(getNomMagasin());
         chargeproduitdanstableau();
-        btn_ajout_panier.setDisable(true);
-
+        btnAjoutPanier.setDisable(true);
     }
 
     /**
@@ -143,17 +131,13 @@ public class CtrlMagasin  {
             colNom.setCellValueFactory(new PropertyValueFactory<Produit, String>("nom"));
             colDescription.setCellValueFactory(new PropertyValueFactory<Produit,String>("description"));
             colPrix.setCellValueFactory(new PropertyValueFactory<Produit,Double>("prix"));
-            table_produit.getColumns().setAll(colImage,colNom,colDescription,colPrix);
+            tableProduit.getColumns().setAll(colImage,colNom,colDescription,colPrix);
 
-            ChargeImageView(ProduitsDansMagasin);
-            table_produit.getItems().addAll(ProduitsDansMagasin);   //Ajoute les produits dans le table view
-            Attributcategorie(ProduitsDansMagasin);
+            ChargeImageView(produitsDansMagasin);
+            tableProduit.getItems().addAll(produitsDansMagasin);
+            Attributcategorie(produitsDansMagasin);
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
+        } catch (MalformedURLException | NotBoundException | RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -163,11 +147,9 @@ public class CtrlMagasin  {
      * @param listeProduit : ArrayList de produit à afficher
      */
     private void ChargeImageView(ArrayList<Produit> listeProduit) {//Charge les ImageView du produit Image
-        for (Produit p :listeProduit
-             ) {
+        for (Produit p :listeProduit) {
             p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));   //Le produit.class deviendra p.geturl
             p.charge();
-            //colImage.setGraphic(p.getView());
         }
     }
 
@@ -177,8 +159,8 @@ public class CtrlMagasin  {
      */
     private void Attributcategorie(ArrayList<Produit> liste)
     {
-        ArrayList<String> listecateg = new ArrayList<>();
-        Set<String> uniqueGas = new HashSet<String>(listecateg);
+        ArrayList<String> listeCateg = new ArrayList<>();
+        Set<String> uniqueGas = new HashSet<String>(listeCateg);
         for(Produit p : liste)
         {
             if(p.getCategorie() != null )
@@ -186,33 +168,32 @@ public class CtrlMagasin  {
                 uniqueGas.add(p.getCategorie());
             }
         }
-        CateMag = observableArrayList(uniqueGas);//Liste caté filtrée sans doublon
+        cateMag = observableArrayList(uniqueGas);//Liste caté filtrée sans doublon
 
-        ListCaté.setItems(CateMag); //Ajoute les catégories dans la listView
-
-        ListViewClickFiltre(liste);
+        listeCaté.setItems(cateMag);
+        listViewClickFiltre(liste);
 
     }
 
     /**
-     * Permet d'ajouter un listener sur la listeview : Filtre les produits en fonction des c&tgories
-     * @param liste : ArrayList de produit de la table view
+     * Permet d'ajouter un listener sur la listeview : Filtre les produits en fonction des catgories
+     * @param liste : ArrayList de produit de la table view (tableau)
      */
-    private void ListViewClickFiltre(ArrayList<Produit> liste) {
-        ListCaté.setOnMouseClicked(event -> {
-            ListCaté.getSelectionModel().getSelectedItem(); //Récup l'item selectionné donc dans notre cas ça veut le nom de la caté
-            ObservableList<Produit> m = observableArrayList(liste) ;
-            FilteredList<Produit> f = new FilteredList<>(m);
-            SortedList<Produit> sortable = new SortedList<>(f);
-            f.predicateProperty().bind(Bindings.createObjectBinding(() -> categorie -> categorie.getCategorie().equals(ListCaté.getSelectionModel().getSelectedItem())));
-            table_produit.setItems(f);
+    private void listViewClickFiltre(ArrayList<Produit> liste) {
+        listeCaté.setOnMouseClicked(event -> {
+            listeCaté.getSelectionModel().getSelectedItem(); //Récup l'item selectionné donc dans notre cas ça veut le nom de la caté
+            ObservableList<Produit> produitObservableList = observableArrayList(liste) ;
+            FilteredList<Produit> produitFilteredList = new FilteredList<>(produitObservableList);
+
+            produitFilteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> categorie -> categorie.getCategorie().equals(listeCaté.getSelectionModel().getSelectedItem())));
+            tableProduit.setItems(produitFilteredList);
         });
     }
 
     /**
      * Charge le logo du panier
      */
-    private void chargerlogopanier()
+    private void chargeLogoPanier()
     {
         String chemin = String.valueOf(getClass().getResource("image/panier.png"));
 
@@ -227,17 +208,17 @@ public class CtrlMagasin  {
     /**
      * Met à jour la partie détails de l'interface en fonction du choix de l'utilisateur
      */
-    public void test_click()    //Quand on click sur la table view
+    public void clickElmtTbl()
     {
         //System.out.println(table_produit.getSelectionModel().getSelectedItem().getNom());
-        dts_dsc.setText(table_produit.getSelectionModel().getSelectedItem().getDescription());
-        dts_val.setText(String.valueOf(table_produit.getSelectionModel().getSelectedItem().getPrix()));
-        Dts_nom.setText(table_produit.getSelectionModel().getSelectedItem().getNom());
-        dts_dsc.setWrapText(true);
-        Dts_nom.setWrapText(true);
-        dts_dsc.setEditable(false);
-        Dts_nom.setEditable(false);
-        btn_ajout_panier.setDisable(false);
+        dtsDsc.setText(tableProduit.getSelectionModel().getSelectedItem().getDescription());
+        dtsVal.setText(String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()));
+        dtsNom.setText(tableProduit.getSelectionModel().getSelectedItem().getNom());
+        dtsDsc.setWrapText(true);
+        dtsNom.setWrapText(true);
+        dtsDsc.setEditable(false);
+        dtsNom.setEditable(false);
+        btnAjoutPanier.setDisable(false);
     }
 
 

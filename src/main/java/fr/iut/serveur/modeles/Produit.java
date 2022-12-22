@@ -4,20 +4,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Produit implements Serializable {
 
-    int id; //Attribut à supprimer
     String nom;
     String description;
     Double prix;
     String categorie;
     Image img; //Image du produit url
-    Categories c;
     ImageView view;
 
-    public Produit(int id, String nom, String description, String prix,String categorie) {//Si caté vide alors caté == "vide"
-        this.id = id;
+    public Produit(String nom, String description, String prix,String categorie) {//Si caté vide alors caté == "vide"
         this.nom = nom;
         this.description = description;
         this.prix = Double.valueOf(prix);
@@ -44,14 +42,6 @@ public class Produit implements Serializable {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
-    }
-
-    public Categories getC() {
-        return c;
-    }
-
-    public void setC(Categories c) {
-        this.c = c;
     }
 
     public String getNom() {
@@ -108,7 +98,7 @@ public class Produit implements Serializable {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Produit) {
-         if(((Produit) obj).getNom() == this.getNom())   return true;
+            return Objects.equals(((Produit) obj).getNom(), this.getNom());
         }
          return false;
     }

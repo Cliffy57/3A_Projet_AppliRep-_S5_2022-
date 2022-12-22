@@ -1,6 +1,6 @@
 package fr.iut.client.vue;
 
-import fr.iut.projet.HelloApplication;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Vue qui se lance lors du lancement de l'application
+ */
 public class VueSelection extends Application {    //Selection du magasin
     @Override
     public void start(Stage stage) throws IOException {

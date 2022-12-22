@@ -1,8 +1,6 @@
 package fr.iut.client.vue;
 
 import fr.iut.client.controleur.CtrlMagasin;
-import fr.iut.projet.HelloApplication;
-import fr.iut.serveur.modeles.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +8,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class VueMagasin extends Application {  //Vue interface principale du magasin
-    String nommagasin;
+/**
+ * Vue du magasin
+ */
+public class VueMagasin extends Application {
+    String nomDuMagasin;
 
     public VueMagasin(String nommagasin) {
         this.nommagasin = nommagasin;
@@ -21,12 +22,10 @@ public class VueMagasin extends Application {  //Vue interface principale du mag
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/interface_magasin.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-        CtrlMagasin Ctrl = fxmlLoader.getController();
-
-        Ctrl.setNommagasin(nommagasin);
-        Ctrl.Lancement();
-
-        stage.setTitle("Magasin " +nommagasin);
+        CtrlMagasin controllerMagasin = fxmlLoader.getController();
+        controllerMagasin.setNomMagasin(nomDuMagasin);
+        controllerMagasin.lancement();
+        stage.setTitle("Magasin " + nomDuMagasin);
         stage.setScene(scene);
         stage.show();
     }

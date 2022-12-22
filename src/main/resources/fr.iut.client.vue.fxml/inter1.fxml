@@ -54,8 +54,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btn_magasin1" mnemonicParsing="false" onAction="#btn1" text="FLUNCH" GridPane.rowIndex="1" />
-                  <Button fx:id="btn_magasin2" mnemonicParsing="false" onAction="#btn2" text="Zara" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="btnMagasin1" mnemonicParsing="false" onAction="#actionMagasin1" text="FLUNCH" GridPane.rowIndex="1" />
+                  <Button fx:id="btnMagasin2" mnemonicParsing="false" onAction="#actionMagasin2" text="Zara" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
       </children>

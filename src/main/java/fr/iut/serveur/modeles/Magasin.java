@@ -30,12 +30,12 @@ public class Magasin {
 
 
 
-    public void AjouterProduitMagasin(Produit p)
+    public void ajouterProduitMagasin(Produit p)
     {
         ListeProduits.add(p);
     }
 
-    public void SupprimerProduitMagasin(Produit p)
+    public void supprimerProduitMagasin(Produit p)
     {
         ListeProduits.remove(p);
     }
@@ -45,7 +45,7 @@ public class Magasin {
      * @param mdp : Mot de passe de client
      * @param mel : Adresse mel du client
      */
-    public void Ajouteclient(String mel, String mdp)
+    public void ajouteClient(String mel, String mdp)
     {
         listeClient.add(new Client(mel,mdp));
     }
