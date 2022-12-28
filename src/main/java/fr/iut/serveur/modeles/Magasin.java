@@ -3,21 +3,21 @@ package fr.iut.serveur.modeles;
 import java.util.ArrayList;
 
 public class Magasin {
-    String nom;
+    String nomDuMagasin;
     String url;//Url du logo
     public ArrayList<Produit> ListeProduits = new ArrayList<Produit>();
     public static ArrayList<Client> listeClient = new ArrayList<Client>();
 
     public Magasin(String nom) {
-        this.nom = nom;
+        this.nomDuMagasin = nom;
     }
 
     public String getNom() {
-        return nom;
+        return nomDuMagasin;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nomDuMagasin = nom;
     }
 
     public ArrayList<Produit> getListeProduits() {

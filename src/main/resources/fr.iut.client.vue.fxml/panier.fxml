@@ -62,19 +62,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="nomproduit1" text="Label" />
-                  <Label fx:id="nomproduit2" text="Label" GridPane.rowIndex="1" />
-                  <Label fx:id="nomproduit3" text="Label" GridPane.rowIndex="2" />
-                  <Label fx:id="nomproduit4" text="Label" GridPane.rowIndex="3" />
-                  <Label fx:id="prix1" text="Label" GridPane.columnIndex="1" />
-                  <Label fx:id="prix2" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="prix3" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="prix4" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="lblNomDuProduit1" text="Label" />
+                  <Label fx:id="lblNomDuProduit2" text="Label" GridPane.rowIndex="1" />
+                  <Label fx:id="lblNomDuProduit3" text="Label" GridPane.rowIndex="2" />
+                  <Label fx:id="lblNomDuProduit4" text="Label" GridPane.rowIndex="3" />
+                  <Label fx:id="prixDuProduit1" text="Label" GridPane.columnIndex="1" />
+                  <Label fx:id="prixDuProduit2" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="prixDuProduit3" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="prixDuProduit4" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <Label fx:id="total" layoutX="560.0" layoutY="328.0" text="Total_prix" />
-            <Button fx:id="btn_confirmer" layoutX="560.0" layoutY="361.0" mnemonicParsing="false" onAction="#btn_confirmer_action" text="Confirmer" />
-            <Button fx:id="btn_retour" layoutX="54.0" layoutY="361.0" mnemonicParsing="false" onAction="#btn_retour_action" text="Retour" />
+            <Label fx:id="totalDuPanier" layoutX="560.0" layoutY="328.0" text="Total_prix" />
+            <Button fx:id="boutonDeConfirmation" layoutX="560.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnConfirmerAction" text="Confirmer" />
+            <Button fx:id="boutonRetour" layoutX="54.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnRetourAction" text="Retour" />
       </children>
     </AnchorPane>
   </children>

@@ -12,22 +12,19 @@ import java.io.IOException;
  * Vue modal de la connexion
  */
 public class VueModalConnexion extends Application {  //Vue interface principale du magasin
-    String nommagasin;
+    String nomDuMagasin;
 
-    public VueModalConnexion(String nommagasin) {
-        this.nommagasin = nommagasin;
+    public VueModalConnexion(String nomDuMagasin) {
+        this.nomDuMagasin = nomDuMagasin;
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/interface_modal_co.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-        CtrlModalCo Ctrl = fxmlLoader.getController();
-
-        Ctrl.setNommagasin(nommagasin);
-        //Ctrl.Lancement();
-
-        stage.setTitle("Connexion à " + nommagasin);
+        CtrlModalDeConnexion controllerModalConnexion = fxmlLoader.getController();
+        controllerModalConnexion.setNomMagasin(nomDuMagasin);
+        stage.setTitle("Connexion à " + nomDuMagasin);
         stage.setScene(scene);
         stage.show();
     }

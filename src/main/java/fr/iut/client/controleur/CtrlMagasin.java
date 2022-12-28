@@ -3,7 +3,7 @@ package fr.iut.client.controleur;
 import fr.iut.client.vue.VuePanier;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
-import fr.iut.serveur.modeles.ports;
+import fr.iut.serveur.modeles.Ports;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -76,10 +76,10 @@ public class CtrlMagasin {
     public void lanceVuePanier() throws IOException {
         try
         {
-            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-            System.out.println(user_co.toString());
-            user_co.ConsultePanier();
-            new VuePanier(getUser_co()).start(new Stage());
+            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+            System.out.println(userCo.toString());
+            userCo.ConsultePanier();
+            new VuePanier(getUserCo()).start(new Stage());
         }catch(Exception e){
             System.out.println("Une erreur est advenue lors du lancement du panier "+e);
         }
@@ -89,10 +89,8 @@ public class CtrlMagasin {
      * Action lors du click utilisateur sur le bouton Ajouter au panier
      * @throws MalformedURLException,NotBoundException,RemoteException
      */
-    public void Ajout_panier() throws MalformedURLException, NotBoundException, RemoteException {
-        MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-        //M.
-      //  if(M.CoClient("Mel@",nommagasin)) { //SI client est co et appartient verif useless now
+    public void ajoutPanier() throws MalformedURLException, NotBoundException, RemoteException {
+        MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
 
             Produit p = new Produit(
                     tableProduit.getSelectionModel().getSelectedItem().getNom(),
@@ -122,10 +120,10 @@ public class CtrlMagasin {
     private void chargeproduitdanstableau()
     {
         try {
-            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ ports.Port_Magasin+"/java");
-            setUser_co(M.RecupereClientActuel());
-            nom_user.setText(user_co.getMel());
-            ArrayList<Produit> ProduitsDansMagasin = M.ConsulterListeProduitMagasin(nommagasin);
+            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+            setUserCo(M.recupereClientActuel());
+            nom_user.setText(userCo.getMel());
+            ArrayList<Produit> produitsDansMagasin = M.consulterListeProduitMagasin(nomMagasin);
 
             colImage.setCellValueFactory(new PropertyValueFactory<Produit,ImageView>("view"));
             colNom.setCellValueFactory(new PropertyValueFactory<Produit, String>("nom"));

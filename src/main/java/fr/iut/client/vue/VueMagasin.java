@@ -14,8 +14,8 @@ import java.io.IOException;
 public class VueMagasin extends Application {
     String nomDuMagasin;
 
-    public VueMagasin(String nommagasin) {
-        this.nommagasin = nommagasin;
+    public VueMagasin(String nomDuMagasin) {
+        this.nomDuMagasin = nomDuMagasin;
     }
 
     @Override

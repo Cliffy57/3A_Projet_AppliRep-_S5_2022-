@@ -10,20 +10,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class VuePanier extends Application {
-     Client c;
+     Client clientDuPanier;
      public VuePanier(Client client)
      {
-         if(client!=null)this.c= client;
+         if(client!=null)this.clientDuPanier = client;
          else throw new NullPointerException("Lors de la construction du panier, le client fournit en argument s'est averé être null");
      }
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/panier.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 400);
-        CtrlPanier Ctrl = fxmlLoader.getController();
-        Ctrl.setPanierCtrl(c.getPanier());
-        Ctrl.chargement();
-
+        CtrlPanier controllerPanier = fxmlLoader.getController();
+        controllerPanier.setPanierCtrl(clientDuPanier.getPanier());
+        controllerPanier.chargementDuPanier();
         stage.setTitle("Votre panier");
         stage.setScene(scene);
         stage.show();

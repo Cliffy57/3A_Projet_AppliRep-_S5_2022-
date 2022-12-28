@@ -12,18 +12,18 @@ import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface {
 
-    Client current_user;    //Utilisateur du site
-    private ArrayList<Magasin> ListeMagasin = new ArrayList<Magasin>();
+    Client currentUser;    //Utilisateur du site
+    private ArrayList<Magasin> listeMagasin = new ArrayList<Magasin>();
     private Map<String, Double> prices;
-    private String nom;
+    private String nomMagasin;
 
     public String getNom() {
-        return nom;
+        return nomMagasin;
     }
 
     public MagasinImpl(String nom) throws RemoteException {
         Init();
-        this.nom = nom;
+        this.nomMagasin = nom;
         this.prices = new HashMap<>();
     }
 
@@ -70,7 +70,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     @Override
     public ArrayList<Produit> consulterListeProduitMagasin(String nommagasin) throws RemoteException {
         ArrayList <Produit> P = new ArrayList<>();
-        for(Magasin m : ListeMagasin)
+        for(Magasin m : listeMagasin)
         {
 
             if(m.getNom().equals(nommagasin))
@@ -92,25 +92,25 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
      * Vérifie si un client est présent dans la liste des clients
      * @param mel : Adresse mel du client
      */
-    private boolean vérificationclient(String mel,String nommagasin)
+    private boolean vérificationclient(String mel,String nomDuMagasin)
     {
-        boolean trouve =false;
-        for(Magasin m : ListeMagasin)
+        boolean trouveMagasin =false;
+        for(Magasin m : listeMagasin)
         {
-            if(m.getNom().equals(nommagasin))    //Recherche le magasin dans la liste des magasins disponibles
+            if(m.getNom().equals(nomDuMagasin))    //Recherche le magasin dans la liste des magasins disponibles
             {
                 for (Client cl: listeClient) {  //Recherche dans la liste client du magasin
                     if(cl.getMel().equals(mel))
                     {
-                        trouve= true;
-                        current_user = cl;
+                        trouveMagasin= true;
+                        currentUser = cl;
                     }
                 }
             }
 
         }
 
-        return trouve;
+        return trouveMagasin;
 
     }
 
@@ -138,8 +138,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         }else throw new IllegalArgumentException("Le client est null");
     }
 
-    public Client RecupereClientActuel() throws RemoteException{
-        return current_user;
+    public Client recupereClientActuel() throws RemoteException{
+        return currentUser;
     }
 
 
@@ -160,7 +160,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     @Override
     public String getnom() throws RemoteException {
-        return nom;
+        return nomMagasin;
     }
     @Override
     public void placeOrder(String username) throws RemoteException {

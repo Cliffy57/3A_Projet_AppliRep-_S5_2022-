@@ -1,19 +1,18 @@
 package fr.iut.serveur.modeles;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class Client implements Serializable {//Note: Ajout du serializable car export dans l'interface
             //TODO Pour le problème de plusieurs produits identiques dans le panier, on fera le traitement au niveau du ctrlmagasin
-    private int id; //Id d'un client
-    private String mel;
-    private String mdp;
-    private String solde; //Solde du compte bancaire d'un client
+    private int idClient; //Id d'un client
+    private String melClient;
+    private String mdpClient;
+    private String soldeDuClient; //Solde du compte bancaire d'un client
     private String codebancaire;    //Numéro de code bancaire du client
-    private String id_bancaire; //Id de la banque du client (à voir jusqu'où on va dans le projet)
+    private String idBancaire; //Id de la banque du client (à voir jusqu'où on va dans le projet)
 
 
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
@@ -23,42 +22,42 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
     {
         if(!mel.isEmpty()&&!mdp.isEmpty())
         {
-            this.id=listeClient.size()+1;
-            this.mel=mel.trim();
-            this.mdp=mdp.trim();
+            this.idClient =listeClient.size()+1;
+            this.melClient =mel.trim();
+            this.mdpClient =mdp.trim();
         }else throw new IllegalArgumentException("Le champ mail ou mdp est vide");
     }
 
     public int getId() {
-        return id;
+        return idClient;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idClient = id;
     }
 
     public String getMel() {
-        return mel;
+        return melClient;
     }
 
     public void setMel(String mel) {
-        this.mel = mel;
+        this.melClient = mel;
     }
 
     public String getMdp() {
-        return mdp;
+        return mdpClient;
     }
 
     public void setMdp(String mdp) {
-        this.mdp = mdp;
+        this.mdpClient = mdp;
     }
 
     public String getSolde() {
-        return solde;
+        return soldeDuClient;
     }
 
     public void setSolde(String solde) {
-        this.solde = solde;
+        this.soldeDuClient = solde;
     }
 
     public ArrayList<Produit> getPanier() {

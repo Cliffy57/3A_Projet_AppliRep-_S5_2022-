@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,31 +18,32 @@ public class CtrlPanier {
      //Panier d'un client
     private ArrayList<Produit> PanierClient = new ArrayList<Produit>(); //Panier d'un client
 
-    @FXML private Button btn_retour;
-    @FXML private Button btn_confirmer;
-    @FXML private Label total;
+    @FXML private Button boutonRetour;
+    @FXML private Button boutonDeConfirmation;
+    @FXML private Label totalDuPanier;
 
-    @FXML private Label nomproduit1;
-    @FXML private Label nomproduit2;
-    @FXML private Label nomproduit3;
-    @FXML private Label nomproduit4;
+    @FXML private Label lblNomDuProduit1;
+    @FXML private Label lblNomDuProduit2;
+    @FXML private Label lblNomDuProduit3;
+    @FXML private Label lblNomDuProduit4;
 
-    @FXML private Label prix1;
-    @FXML private Label prix2;
-    @FXML private Label prix3;
-    @FXML private Label prix4;
+    @FXML private Label prixDuProduit1;
+    @FXML private Label prixDuProduit2;
+    @FXML private Label prixDuProduit3;
+    @FXML private Label prixDuProduit4;
 
 
 //FIXME : Le panier est vide lors du premier lancement du panier, faut reset l'affichage pour qu'il recup le panier qui contient les trucs
-    public void setPanierCtrl(ArrayList<Produit> a){this.PanierClient=a;}   //Autre manière de faire utiliser l'interface: faire une méthode qui renvoit le panier du client mais je préfère cette methode car si on commence à déclarer tout et n'importe quoi ça va pas le faire même si là c'est dans une zone flou
+    public void setPanierCtrl(ArrayList<Produit> a){this.PanierClient=a;}
+    //TODO : Autre manière de faire utiliser l'interface: faire une méthode qui renvoit le panier du client mais je préfère cette methode car si on commence à déclarer tout et n'importe quoi ça va pas le faire même si là c'est dans une zone flou
     /**
      * Charge le panier
      */
-    public void chargement()
+    public void chargementDuPanier()
     {
-        resetgrid();
+        resetContenuPanier();
         System.out.println("Taille du panier"+PanierClient.size());
-        if(PanierClient.isEmpty())total.setText(String.valueOf(0));
+        if(PanierClient.isEmpty()) totalDuPanier.setText(String.valueOf(0));
         else
         {
 
@@ -57,14 +57,14 @@ public class CtrlPanier {
                 counts.put(p.getNom(), (j == null) ? 1 : j + 1);
                 somme += p.getPrix();
                 if(j!=null) {
-                   if(counts.size()==1) contenulignegrid(nomproduit1,prix1,p.getPrix(),j,p.getNom());
-                   else if(counts.size()==2)contenulignegrid(nomproduit2,prix2,p.getPrix(),j,p.getNom());
-                   else if(counts.size()==3)contenulignegrid(nomproduit3,prix3,p.getPrix(),j,p.getNom());
+                   if(counts.size()==1) afficherContenuDuPanier(lblNomDuProduit1, prixDuProduit1,p.getPrix(),j,p.getNom());
+                   else if(counts.size()==2) afficherContenuDuPanier(lblNomDuProduit2, prixDuProduit2,p.getPrix(),j,p.getNom());
+                   else if(counts.size()==3) afficherContenuDuPanier(lblNomDuProduit3, prixDuProduit3,p.getPrix(),j,p.getNom());
                     System.out.println("Affichage update");
             }
             }
             int valeur= counts.size();
-            total.setText(String.valueOf(round(somme,2)));
+            totalDuPanier.setText(String.valueOf(Math.round(somme)));
                 for (Map.Entry<String, Integer> val : counts.entrySet()) {  //Pour chaque entry de counts
                   //  System.out.println(val.getValue()+"/"+val.getKey());
                    /* if(valeur ==3)contenulignegrid(nomproduit3,prix3,val.getKey().getPrix(),val.getValue(),val.getKey().getNom());
@@ -84,56 +84,43 @@ public class CtrlPanier {
 
         }
     }
-    public void btn_confirmer_action()
+    public void btnConfirmerAction()
     {
     }
 
-    public void btn_retour_action()
+    public void btnRetourAction()
     {
-        fermer_fenetre(btn_retour);
+        fermerFenetre(boutonRetour);
     }
 
-    private void fermer_fenetre(Button btn)   //Possibilité de micheliser tout ça avec juste un attribut Button btn
+    private void fermerFenetre(Button btn)   //Possibilité de micheliser tout ça avec juste un attribut Button btn
     {
         Stage stage=(Stage) btn.getScene().getWindow();
         stage.close();
     }
 
-    private void resetgrid()//TODO A opti via boucle
+    private void resetContenuPanier()//TODO A opti via boucle
     {
-        nomproduit1.setText("");
-        prix1.setText("");
-        nomproduit2.setText("");
-        prix2.setText("");
-        nomproduit3.setText("");
-        prix3.setText("");
-        nomproduit4.setText("");
-        prix4.setText("");
+        lblNomDuProduit1.setText("");
+        prixDuProduit1.setText("");
+        lblNomDuProduit2.setText("");
+        prixDuProduit2.setText("");
+        lblNomDuProduit3.setText("");
+        prixDuProduit3.setText("");
+        lblNomDuProduit4.setText("");
+        prixDuProduit4.setText("");
     }
 
 
     /**
-     * Affiche du contenu dans la grid
+     * Affiche du contenu du panier dans une grid
      */
-    private void contenulignegrid(Label l,Label l2, double valeurproduit ,int qty,String nomproduit)
+    private void afficherContenuDuPanier(Label labelNomDuProduit, Label labelPrixTotalDuProduit, double valeurDuProduit , int quantiteAjouteAuPanier, String nomDuProduit)
     {
-        int qty2=qty+1;  //Car sinon cran en dessous
-        l.setText(nomproduit+" x "+qty2);
-        l2.setText(String.valueOf(round(valeurproduit*qty2,2))+"€");
+        int quantiteReel=quantiteAjouteAuPanier+1;  //FIXME  sinon cran en dessous
+        labelNomDuProduit.setText(nomDuProduit+" x "+quantiteReel);
+        labelPrixTotalDuProduit.setText(Math.round(valeurDuProduit * quantiteReel) +"€");
 
     }
 
-    private Label getLabel(String nom,Integer ligne)
-    {
-         //this.nomproduit3.get;//nom+ligne;
-        return null;
-    }
-
-    public static double round(double value, int places) {  //C'est soit ça soit on dl une librairie....je préfère la deuxieme option
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
 }
