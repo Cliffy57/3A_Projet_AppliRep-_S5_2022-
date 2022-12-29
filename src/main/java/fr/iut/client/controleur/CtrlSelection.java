@@ -1,5 +1,9 @@
 package fr.iut.client.controleur;
 
+import fr.iut.client.vue.VueMagasin;
+import fr.iut.client.vue.VuePanier;
+import fr.iut.serveur.modeles.Magasin;
+import fr.iut.serveur.modeles.Produit;
 import fr.iut.serveur.skeleton.BanqueImpl;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
@@ -8,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -40,32 +45,34 @@ public class CtrlSelection implements Initializable {
      * @param actionEvent
      */
     public void actionMagasin1(ActionEvent actionEvent) {
-
         {
+            Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
+            Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
 
             try {
               Registry  registry = LocateRegistry.getRegistry();
 
                 System.out.println(registry.lookup("shop"));
 
-               MagasinInterface  shop = (MagasinInterface) registry.lookup("shop");
+               MagasinInterface  Shop = (MagasinInterface) registry.lookup("shop");
 
-                System.out.println( shop.getnom());
+                System.out.println( Shop.getnom());
 
                 BanqueImpl bank = new BanqueImpl("8001");
-                shop.addItem("book", 19.99);
-                shop.addItem("pen", 0.99);
+                Shop.coClient("Mel@");
+              //  shop.addItem("pen", 0.99);
 
                 // Invoke the remote methods
-                UID clientId = new UID();
+                UID clientId = new UID();   //Ca sera notre classe User après
                 System.out.println("Client ID: " + clientId);
                 // String name = shop.getName();
-                double price = shop.getPrice("book");
-                shop.placeOrder(String.valueOf(clientId));
-                shop.order("book");
+             //   double price = shop.getPrice("book");
+            //    shop.placeOrder(String.valueOf(clientId)); validePanier
+             //   shop.order("book");
+                new VueMagasin("shop").start(new Stage());
                 
                 fermerFenetre();
-            } catch (RemoteException | NotBoundException e) {
+            } catch (NotBoundException | IOException e) {
                 e.printStackTrace();
             }
 

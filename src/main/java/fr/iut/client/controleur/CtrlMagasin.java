@@ -20,6 +20,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -90,7 +92,8 @@ public class CtrlMagasin {
      * @throws MalformedURLException,NotBoundException,RemoteException
      */
     public void ajoutPanier() throws MalformedURLException, NotBoundException, RemoteException {
-        MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+        Registry registry = LocateRegistry.getRegistry();
+        MagasinInterface  shop = (MagasinInterface) registry.lookup("shop");
 
             Produit p = new Produit(
                     tableProduit.getSelectionModel().getSelectedItem().getNom(),
@@ -98,8 +101,10 @@ public class CtrlMagasin {
                     String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()),
                     tableProduit.getSelectionModel().getSelectedItem().getCategorie()
             );
-            M.ajoutProduit(p);
-        System.out.println("Ajout produit au client "+ userCo.getMdp());
+        System.out.println(shop.recupereClientActuel().toString());
+            shop.ajoutProduit(p);
+        System.out.println("Ajout produit au client "+ userCo.toString());
+
     }
 
     /**
@@ -120,10 +125,17 @@ public class CtrlMagasin {
     private void chargeproduitdanstableau()
     {
         try {
-            MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-            setUserCo(M.recupereClientActuel());
-            nom_user.setText(userCo.getMel());
+            Registry  registry = LocateRegistry.getRegistry();
+
+
+            MagasinInterface  M = (MagasinInterface) registry.lookup("shop");
+           // System.out.println(M.consulterListeProduitMagasin("shop").toString());
+           // MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+
+            //setUserCo(M.recupereClientActuel());
+            //nom_user.setText(userCo.getMel());
             ArrayList<Produit> produitsDansMagasin = M.consulterListeProduitMagasin(nomMagasin);
+            System.out.println(Arrays.toString(M.consulterListeProduitMagasin(nomMagasin).toArray()));
 
             colImage.setCellValueFactory(new PropertyValueFactory<Produit,ImageView>("view"));
             colNom.setCellValueFactory(new PropertyValueFactory<Produit, String>("nom"));
@@ -135,7 +147,7 @@ public class CtrlMagasin {
             tableProduit.getItems().addAll(produitsDansMagasin);
             Attributcategorie(produitsDansMagasin);
 
-        } catch (MalformedURLException | NotBoundException | RemoteException e) {
+        } catch (NotBoundException | RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -206,9 +218,12 @@ public class CtrlMagasin {
     /**
      * Met à jour la partie détails de l'interface en fonction du choix de l'utilisateur
      */
-    public void clickElmtTbl()
-    {
+    public void clickElmtTbl() throws RemoteException, NotBoundException {
+        Registry registry = LocateRegistry.getRegistry();
+        MagasinInterface  shop = (MagasinInterface) registry.lookup("shop");
+        //shop.addItem("book", 19.99);
         //System.out.println(table_produit.getSelectionModel().getSelectedItem().getNom());
+
         dtsDsc.setText(tableProduit.getSelectionModel().getSelectedItem().getDescription());
         dtsVal.setText(String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()));
         dtsNom.setText(tableProduit.getSelectionModel().getSelectedItem().getNom());

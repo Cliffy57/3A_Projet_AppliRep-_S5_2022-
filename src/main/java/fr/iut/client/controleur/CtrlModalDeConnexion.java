@@ -32,7 +32,7 @@ public class CtrlModalDeConnexion {
         Client clientConfirme= null;
         try {
         MagasinInterface magasinInterface = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-            if(!melTextArea.getText().isEmpty()&&!motDePasseTexteArea.getText().isEmpty()&&magasinInterface.coClient(melTextArea.getText(), nomDuMagasin))
+          //  if(!melTextArea.getText().isEmpty()&&!motDePasseTexteArea.getText().isEmpty()&&magasinInterface.coClient(melTextArea.getText()); //nomDuMagasin))
             {
                 System.out.println("Client reconnu");
                 clientConfirme=new Client(melTextArea.getText(), motDePasseTexteArea.getText());

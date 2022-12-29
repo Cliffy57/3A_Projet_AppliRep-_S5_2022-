@@ -1,8 +1,9 @@
 package fr.iut.serveur.modeles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Magasin {
+public class Magasin implements Serializable {
     String nomDuMagasin;
     String url;//Url du logo
     public ArrayList<Produit> ListeProduits = new ArrayList<Produit>();
@@ -32,7 +33,7 @@ public class Magasin {
 
     public void ajouterProduitMagasin(Produit p)
     {
-        ListeProduits.add(p);
+        ListeProduits.add(p);//TODO si le produit existe déjà ne peut pas l'ajouter
     }
 
     public void supprimerProduitMagasin(Produit p)

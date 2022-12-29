@@ -16,15 +16,18 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     private ArrayList<Magasin> listeMagasin = new ArrayList<Magasin>();
     private Map<String, Double> prices;
     private String nomMagasin;
+    private Magasin mag;
 
     public String getNom() {
         return nomMagasin;
     }
 
     public MagasinImpl(String nom) throws RemoteException {
-        Init();
         this.nomMagasin = nom;
         this.prices = new HashMap<>();
+        this.mag = new Magasin(this.nomMagasin);
+        listeMagasin.add(mag);
+        Init();
     }
 
     private void Init()
@@ -33,26 +36,27 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         listeClient.add(new Client("hugo3@google.com","swage"));
         Magasin m0 = new Magasin("FLUNCH");
         Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
-        Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
-        Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
+       // Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
+       // Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
         //p1.
         //p2.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //p3.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
-        m0.ajouterProduitMagasin(p1);
-        m0.ajouterProduitMagasin(p2);
-        m0.ajouterProduitMagasin(p3);
-        listeMagasin.add(m0);
+        mag.ajouterProduitMagasin(p1);
+       // mag.ajouterProduitMagasin(p2);
+        //mag.ajouterProduitMagasin(p3);
+        listeMagasin.add(mag);
 
     }
 
     @Override
-    public boolean coClient(String mel, String nommagasin) throws RemoteException {
-        if(vérificationclient(mel,nommagasin))
-        {
+    public boolean coClient(String mel) throws RemoteException {
+       // if(vérificationclient(mel,nommagasin))
+       // {
             System.out.println("Client "+mel+" connecté");
+            this.currentUser=new Client(mel,"18574");
             return true;
-        }else return false;
+        //}else return false;
 
     }
 
@@ -173,5 +177,15 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     public void addItem(String item, double price) {
         prices.put(item, price);
     }
+
+    @Override
+    public void addItem2(Produit p ) throws RemoteException {
+        mag.ajouterProduitMagasin(p);
+        System.out.println("Produit ajouté");
+        System.out.println(mag.toString());
+        System.out.println(mag.getListeProduits().toString());
+    }
+
+    public Magasin getMagasin(){return mag;}
 }
 
