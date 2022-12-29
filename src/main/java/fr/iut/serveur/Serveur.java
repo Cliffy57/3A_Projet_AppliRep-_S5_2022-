@@ -3,6 +3,7 @@ package fr.iut.serveur;
 import fr.iut.serveur.modeles.Ports;
 import fr.iut.serveur.skeleton.BanqueImpl;
 import fr.iut.serveur.skeleton.MagasinImpl;
+import fr.iut.serveur.skeleton.MagasinInterface;
 
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -23,6 +24,12 @@ public class Serveur {
 
         LocateRegistry.createRegistry(Ports.Port_Magasin);
         Naming.rebind("rmi://localhost:"+ Ports.Port_Magasin+"/java", new MagasinImpl("shop"));
+
+
+        MagasinInterface magasin = new MagasinImpl("magasin");
+        registry = LocateRegistry.getRegistry();
+        registry.rebind("Magasin", magasin);
+
         /*System.out.println("Serveur magasin lancé");
         LocateRegistry.createRegistry(Port_Banque);
         Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));

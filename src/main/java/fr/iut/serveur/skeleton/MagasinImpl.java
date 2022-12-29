@@ -143,9 +143,15 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
             return cl.CalculSommePanier();
         }else throw new IllegalArgumentException("Le client est null");
     }
+/*
+    private static final ThreadLocal<Client> currentClient = new ThreadLocal<>();
+
+    public void setCurrentClient(Client client) {
+        currentClient.set(client);
+    }
 
     public Client recupereClientActuel() throws RemoteException{
-        return currentUser;
+        return currentClient.get();
     }
 
     //OU
@@ -182,9 +188,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         return nomMagasin;
     }
     @Override
-    public void placeOrder(String username) throws RemoteException {
-        // Store the username in the order object
-        Order order = new Order(username);
+    public void placeOrder(String clientUuid, double totalCost) throws RemoteException {
+        System.out.println("Received order from client with UUID " + clientUuid + " for a total of " + totalCost + " euros");
     }
 
 

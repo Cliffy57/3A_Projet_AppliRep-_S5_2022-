@@ -1,6 +1,8 @@
 package fr.iut.client.controleur;
 
+import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
+import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +10,10 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +71,7 @@ public class CtrlPanier {
             }
             int valeur= counts.size();
             totalDuPanier.setText(String.valueOf(Math.round(somme)));
+
                 for (Map.Entry<String, Integer> val : counts.entrySet()) {  //Pour chaque entry de counts
                   //  System.out.println(val.getValue()+"/"+val.getKey());
                    /* if(valeur ==3)contenulignegrid(nomproduit3,prix3,val.getKey().getPrix(),val.getValue(),val.getKey().getNom());
@@ -84,8 +91,28 @@ public class CtrlPanier {
 
         }
     }
-    public void btnConfirmerAction()
-    {
+    //Envoye le panier au magasin
+    public void btnConfirmerAction() {
+
+        MagasinInterface magasin;
+        try {
+            magasin = (MagasinInterface) Naming.lookup("rmi://localhost/Magasin");
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        Client client;
+        double totalCost;
+        try {
+            client = magasin.recupereClientActuel();
+            totalCost = magasin.calcSommeProduit(client);
+            String uuid = client.getUuid();
+            magasin.placeOrder(uuid, totalCost);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
 
     public void btnRetourAction()

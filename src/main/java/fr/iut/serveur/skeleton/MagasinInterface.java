@@ -22,8 +22,9 @@ public interface MagasinInterface extends Remote {
     double getPrice(String item) throws RemoteException;
     void order(String item) throws RemoteException;
     String getnom() throws  RemoteException;
-    void placeOrder(String username) throws RemoteException;
     public void addItem(String item, double price) throws RemoteException;
 
     public void addItem2(Produit p)throws RemoteException;
+
+    public void placeOrder(String uuid, double totalCost) throws RemoteException;
 }

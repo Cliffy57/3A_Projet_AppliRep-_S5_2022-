@@ -2,6 +2,7 @@ package fr.iut.serveur.modeles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
@@ -13,6 +14,7 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
     private String soldeDuClient; //Solde du compte bancaire d'un client
     private String codebancaire;    //Numéro de code bancaire du client
     private String idBancaire; //Id de la banque du client (à voir jusqu'où on va dans le projet)
+    private UUID uuid;
 
 
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
@@ -25,6 +27,7 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
             this.idClient =listeClient.size()+1;
             this.melClient =mel.trim();
             this.mdpClient =mdp.trim();
+            this.uuid = UUID.randomUUID();
         }else throw new IllegalArgumentException("Le champ mail ou mdp est vide");
     }
 
@@ -106,4 +109,14 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
         return somme;
     }
 
+    public String getUuid() {
+        return uuid.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "uuid=" + uuid + "/mel="+getMel()+
+                '}';
+    }
 }
