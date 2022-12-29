@@ -79,7 +79,8 @@ public class CtrlMagasin {
         try
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-            System.out.println(userCo.toString());
+            System.out.println("VuePanier:"+userCo.toString());
+            System.out.println("l83:");
             userCo.ConsultePanier();
             new VuePanier(getUserCo()).start(new Stage());
         }catch(Exception e){
@@ -101,8 +102,9 @@ public class CtrlMagasin {
                     String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()),
                     tableProduit.getSelectionModel().getSelectedItem().getCategorie()
             );
-        System.out.println(shop.recupereClientActuel().toString());
+        System.out.println("l104:"+shop.recupereClientActuel().toString());
             shop.ajoutProduit(p);
+           // shop.consulterPanier();
         System.out.println("Ajout produit au client "+ userCo.toString());
 
     }
@@ -131,9 +133,10 @@ public class CtrlMagasin {
             MagasinInterface  M = (MagasinInterface) registry.lookup("shop");
            // System.out.println(M.consulterListeProduitMagasin("shop").toString());
            // MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-
-            //setUserCo(M.recupereClientActuel());
+            System.out.println(M.recupereClientActuel().toString());
+            setUserCo(M.recupereClientActuel());
             //nom_user.setText(userCo.getMel());
+
             ArrayList<Produit> produitsDansMagasin = M.consulterListeProduitMagasin(nomMagasin);
             System.out.println(Arrays.toString(M.consulterListeProduitMagasin(nomMagasin).toArray()));
 

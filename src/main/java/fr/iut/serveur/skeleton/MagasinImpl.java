@@ -36,16 +36,17 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         listeClient.add(new Client("hugo3@google.com","swage"));
         Magasin m0 = new Magasin("FLUNCH");
         Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
-       // Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
-       // Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
+        Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
+        Produit p3 = new Produit("COLOP Tampon Encreur Bleu 7x11cm","COLOP offre la possibilité de tamponner de manière permanente vos papiers","5.95","HUGO");
         //p1.
         //p2.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //p3.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));
         //        p1.setCategorie("Metal"); p2.setCategorie("Rock"); p3.setCategorie("Metal");
         mag.ajouterProduitMagasin(p1);
-       // mag.ajouterProduitMagasin(p2);
-        //mag.ajouterProduitMagasin(p3);
-        listeMagasin.add(mag);
+        mag.ajouterProduitMagasin(p2);
+       mag.ajouterProduitMagasin(p3);
+        //System.out.println(currentUser.toString());
+        //listeMagasin.add(mag);
 
     }
 
@@ -63,7 +64,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     @Override
     public void ajoutProduit(Produit p) throws RemoteException {
         currentUser.AjouterPanier(p);
-        System.out.println("Produit Ajouté pour le client:"+ currentUser.getMel());
+        System.out.println("Produit Ajouté pour le client:"+ currentUser.getMel()+"/"+currentUser.getUuid());
+        System.out.println("Nb element impl="+currentUser.getPanier().size());
     }
 
     @Override
@@ -146,8 +148,21 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         return currentUser;
     }
 
+    //OU
 
+    private Client currentClient;
 
+    public void setCurrentClient(Client currentClient) {
+        this.currentClient = currentClient;
+    }
+
+    public Client recupereClientActuel() throws RemoteException {
+        return currentClient;
+    }*/
+    @Override
+    public Client recupereClientActuel() throws RemoteException{
+        return currentUser;
+    }
     @Override
     public double getPrice(String item) throws RemoteException {
         return prices.getOrDefault(item, 0.0);

@@ -67,6 +67,7 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
 
     public void ConsultePanier()    //Retour à modifier par la suite pour la vue panier
     {
+        System.out.println("Nb elmt du panier="+Panier.size());
         for(Produit p : Panier)
         {
             System.out.println(p.toString());
