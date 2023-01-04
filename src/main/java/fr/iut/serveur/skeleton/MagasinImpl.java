@@ -23,7 +23,16 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }
 
     public MagasinImpl(String nom) throws RemoteException {
+        this.currentUser = recupereClientActuel();
         this.nomMagasin = nom;
+        this.prices = new HashMap<>();
+        this.mag = new Magasin(this.nomMagasin);
+        listeMagasin.add(mag);
+        Init();
+    }
+    public MagasinImpl(Client currentUser) throws RemoteException {
+        this.currentUser = currentUser;
+        this.nomMagasin = "shop";
         this.prices = new HashMap<>();
         this.mag = new Magasin(this.nomMagasin);
         listeMagasin.add(mag);
@@ -32,8 +41,9 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     private void Init()
     {
-        listeClient.add(new Client("Mel@","123"));   //Ajout d'un client à la liste de client afin d'avoir une base pour bosser
-        listeClient.add(new Client("hugo3@google.com","swage"));
+
+        //listeClient.add(new Client("Mel@","123"));   //Ajout d'un client à la liste de client afin d'avoir une base pour bosser
+        //listeClient.add(new Client("hugo3@google.com","swage"));
         Magasin m0 = new Magasin("FLUNCH");
         Produit p1 = new Produit("APLI Étiquettes Ø 19mm 5 Feuilles 100 Pièces","Doté d'une experience de plus de 60 ans, APLI a pour objectif principal de satisfaire les utilisateurs pour leurs besoins dans le domaine du bureau, informatique, école et maison, industriel.","1.09","HUGO");
         Produit p2 = new Produit("Scotch Tape Transparent 12mm x 66m","Depuis des décennies, Scotch célèbre l'ingéniosité au quotidien en inventant des produits pour fixer, assembler, fabriquer et créer. Il existe une solution à chaque problème et pour chaque projet, il y a la marque Scotch.\n","2.39","Rock");
@@ -169,7 +179,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }*/
     @Override
     public Client recupereClientActuel() throws RemoteException{
-        return currentUser;
+        //System.out.println("RecupereToString");
+        return getCurrentUser();
     }
     @Override
     public double getPrice(String item) throws RemoteException {
@@ -207,7 +218,15 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         System.out.println(mag.toString());
         System.out.println(mag.getListeProduits().toString());
     }
+    public void setCurrentUser(Client currentUser) {
+        this.currentUser = currentUser;
+        System.out.println("Setter "+this.currentUser.getUuid());
+    }
+    public Client getCurrentUser() {
+        return currentUser;
+    }
 
     public Magasin getMagasin(){return mag;}
+
 }
 

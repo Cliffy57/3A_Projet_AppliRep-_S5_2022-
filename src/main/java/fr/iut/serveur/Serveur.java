@@ -1,5 +1,6 @@
 package fr.iut.serveur;
 
+import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Ports;
 import fr.iut.serveur.skeleton.BanqueImpl;
 import fr.iut.serveur.skeleton.MagasinImpl;
@@ -14,10 +15,10 @@ public class Serveur {
     public static void main(String[] argv)  //Rappel: Possibilité de mettre les ports en arguments
     {
     try {
-        MagasinImpl shop = new MagasinImpl("shop");
+        //MagasinImpl shop = new MagasinImpl("shop");
         BanqueImpl bank = new BanqueImpl("bank");
         Registry registry = LocateRegistry.createRegistry(1099);
-        registry.rebind("shop",shop);
+       // registry.rebind("shop",shop);
         registry.rebind("bank",bank);
         System.out.println("Shop server ready.");
         System.out.println("Bank server ready.");
@@ -26,9 +27,13 @@ public class Serveur {
         Naming.rebind("rmi://localhost:"+ Ports.Port_Magasin+"/java", new MagasinImpl("shop"));
 
 
-        MagasinInterface magasin = new MagasinImpl("magasin");
+        MagasinInterface magasin = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+        magasin.setCurrentUser(new Client("user@email.com", "password"));
+        magasin.coClient(magasin.recupereClientActuel());
+        MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel());
         registry = LocateRegistry.getRegistry();
         registry.rebind("Magasin", magasin);
+        registry.rebind("shop",mag);
 
         /*System.out.println("Serveur magasin lancé");
         LocateRegistry.createRegistry(Port_Banque);
