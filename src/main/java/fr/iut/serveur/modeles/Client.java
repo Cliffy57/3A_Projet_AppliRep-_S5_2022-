@@ -119,4 +119,8 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
                 "uuid=" + uuid + "/mel="+getMel()+
                 '}';
     }
+
+    public void setPanier(ArrayList<Produit> panier) {
+        Panier = panier;
+    }
 }

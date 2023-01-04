@@ -65,7 +65,8 @@ public class CtrlMagasin {
 
     public Client getUserCo(){ return userCo;}
 
-    public void setUserCo(Client user){ this.userCo = user;}
+    public void setUserCo(Client user){
+        System.out.println("SetterUserco"+user.toString());this.userCo = user;}
 
     public void setNomMagasin(String nomMagasin) {
         this.nomMagasin = nomMagasin;
@@ -80,8 +81,10 @@ public class CtrlMagasin {
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
             System.out.println("VuePanier:"+userCo.toString());
-            System.out.println("l83:");
+            System.out.println("l83:"+userCo.hashCode());
             userCo.ConsultePanier();
+            System.out.println((M.recupereClientActuel()));
+
             new VuePanier(getUserCo()).start(new Stage());
         }catch(Exception e){
             System.out.println("Une erreur est advenue lors du lancement du panier "+e);
@@ -102,10 +105,11 @@ public class CtrlMagasin {
                     String.valueOf(tableProduit.getSelectionModel().getSelectedItem().getPrix()),
                     tableProduit.getSelectionModel().getSelectedItem().getCategorie()
             );
-        System.out.println("l104:"+shop.recupereClientActuel().toString());
+        //System.out.println("l104:"+shop.recupereClientActuel().toString());
             shop.ajoutProduit(p);
+            userCo.AjouterPanier(p);
            // shop.consulterPanier();
-        System.out.println("Ajout produit au client "+ userCo.toString());
+        System.out.println("Ajout produit au client "+ userCo.toString()+"//Pointeur:"+shop.recupereClientActuel().hashCode());
 
     }
 
@@ -131,9 +135,10 @@ public class CtrlMagasin {
 
 
             MagasinInterface  M = (MagasinInterface) registry.lookup("shop");
+            System.out.println(M.consulterListeProduitMagasin("shop"));
            // System.out.println(M.consulterListeProduitMagasin("shop").toString());
            // MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-            System.out.println(M.recupereClientActuel().toString());
+            //System.out.println(M.recupereClientActuel().toString());
             setUserCo(M.recupereClientActuel());
             //nom_user.setText(userCo.getMel());
 

@@ -51,11 +51,13 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }
 
     @Override
-    public boolean coClient(String mel) throws RemoteException {
+    public boolean coClient(Client c) throws RemoteException {
        // if(vérificationclient(mel,nommagasin))
        // {
-            System.out.println("Client "+mel+" connecté");
-            this.currentUser=new Client(mel,"18574");
+       // this.currentUser=c;
+        this.currentUser = c;
+        System.out.println(getCurrentUser().getUuid());
+            System.out.println("Client  connecté"+c.getUuid()+"/"+c.getMel());
             return true;
         //}else return false;
 

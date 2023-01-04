@@ -59,7 +59,8 @@ public class CtrlSelection implements Initializable {
                 System.out.println( Shop.getnom());
 
                 BanqueImpl bank = new BanqueImpl("8001");
-                Shop.coClient("Mel@");
+
+             //   Shop.coClient(Shop.recupereClientActuel());
               //  shop.addItem("pen", 0.99);
 
                 // Invoke the remote methods

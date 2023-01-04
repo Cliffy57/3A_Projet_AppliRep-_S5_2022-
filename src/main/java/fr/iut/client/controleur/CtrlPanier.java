@@ -63,6 +63,7 @@ public class CtrlPanier {
                 counts.put(p.getNom(), (j == null) ? 1 : j + 1);
                 somme += p.getPrix();
                 if(j!=null) {
+                    System.out.println("Affichage");
                    if(counts.size()==1) afficherContenuDuPanier(lblNomDuProduit1, prixDuProduit1,p.getPrix(),j,p.getNom());
                    else if(counts.size()==2) afficherContenuDuPanier(lblNomDuProduit2, prixDuProduit2,p.getPrix(),j,p.getNom());
                    else if(counts.size()==3) afficherContenuDuPanier(lblNomDuProduit3, prixDuProduit3,p.getPrix(),j,p.getNom());
@@ -70,6 +71,7 @@ public class CtrlPanier {
             }
             }
             int valeur= counts.size();
+            System.out.println("TEST : "+counts.size());
             totalDuPanier.setText(String.valueOf(Math.round(somme)));
 
                 for (Map.Entry<String, Integer> val : counts.entrySet()) {  //Pour chaque entry de counts
@@ -104,6 +106,8 @@ public class CtrlPanier {
         double totalCost;
         try {
             client = magasin.recupereClientActuel();
+            client.setPanier(PanierClient);
+            client.ConsultePanier();
             totalCost = magasin.calcSommeProduit(client);
             String uuid = client.getUuid();
             magasin.placeOrder(uuid, totalCost);
