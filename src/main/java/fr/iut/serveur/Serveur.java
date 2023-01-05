@@ -25,6 +25,8 @@ public class Serveur {
         System.out.println("Bank server ready.");
 
         LocateRegistry.createRegistry(Ports.Port_Magasin);
+        LocateRegistry.createRegistry(Ports.Port_Banque);
+
         Naming.rebind("rmi://localhost:"+ Ports.Port_Magasin+"/java", new MagasinImpl("shop"));
         Naming.rebind("rmi://localhost:"+ Ports.Port_Banque+"/java", new BanqueImpl("bank"));
 
@@ -33,6 +35,7 @@ public class Serveur {
         magasin.setCurrentUser(new Client("user@email.com", "password"));
         magasin.coClient(magasin.recupereClientActuel());
         MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel());
+
         registry = LocateRegistry.getRegistry();
         registry.rebind("Magasin", magasin);
         registry.rebind("shop",mag);
