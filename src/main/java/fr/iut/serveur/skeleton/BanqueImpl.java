@@ -66,4 +66,16 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
         //Store the UUID of the user in the Transaction Object
         Transaction transaction = new Transaction(userId);
     }
+
+    public void processOrder(Client client, double totalCost) throws RemoteException {
+        // Check if the client has enough money to complete the order
+        if (client.getMoney() >= totalCost) {
+            client.setMoney(client.getMoney() - totalCost);
+            // Send the order to the server
+            BanqueInterface bank = null;
+            System.out.println("Order processed for client " + client.getUuid() + " for a total of " + totalCost + " euros");
+        } else {
+            throw new RemoteException("Client " + client.getUuid() + " does not have enough money to complete the order");
+        }
+    }
 }

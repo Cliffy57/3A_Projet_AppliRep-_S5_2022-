@@ -3,6 +3,7 @@ package fr.iut.serveur;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Ports;
 import fr.iut.serveur.skeleton.BanqueImpl;
+import fr.iut.serveur.skeleton.BanqueInterface;
 import fr.iut.serveur.skeleton.MagasinImpl;
 import fr.iut.serveur.skeleton.MagasinInterface;
 
@@ -25,8 +26,9 @@ public class Serveur {
 
         LocateRegistry.createRegistry(Ports.Port_Magasin);
         Naming.rebind("rmi://localhost:"+ Ports.Port_Magasin+"/java", new MagasinImpl("shop"));
+        Naming.rebind("rmi://localhost:"+ Ports.Port_Banque+"/java", new BanqueImpl("bank"));
 
-
+        BanqueInterface banq = (BanqueInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Banque+"/java");
         MagasinInterface magasin = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
         magasin.setCurrentUser(new Client("user@email.com", "password"));
         magasin.coClient(magasin.recupereClientActuel());
@@ -34,7 +36,9 @@ public class Serveur {
         registry = LocateRegistry.getRegistry();
         registry.rebind("Magasin", magasin);
         registry.rebind("shop",mag);
+        registry.rebind("bank",banq);
 
+        //Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));
         /*System.out.println("Serveur magasin lancé");
         LocateRegistry.createRegistry(Port_Banque);
         Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));

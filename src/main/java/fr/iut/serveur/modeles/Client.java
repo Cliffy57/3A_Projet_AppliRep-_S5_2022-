@@ -15,6 +15,7 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
     private String codebancaire;    //Numéro de code bancaire du client
     private String idBancaire; //Id de la banque du client (à voir jusqu'où on va dans le projet)
     private UUID uuid;
+    private double money = 5;
 
 
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
@@ -122,5 +123,15 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
 
     public void setPanier(ArrayList<Produit> panier) {
         Panier = panier;
+    }
+    public void clearCart() {
+        Panier.clear();
+    }
+    public double getMoney() {
+        return this.money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 }
