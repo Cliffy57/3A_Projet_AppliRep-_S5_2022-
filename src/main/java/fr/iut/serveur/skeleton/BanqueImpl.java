@@ -2,8 +2,17 @@ package fr.iut.serveur.skeleton;
 
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Order;
+import fr.iut.serveur.modeles.Ports;
 import fr.iut.serveur.modeles.Transaction;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.RMISocketFactory;
 import java.rmi.server.UnicastRemoteObject;
@@ -74,6 +83,17 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
             // Send the order to the server
             BanqueInterface bank = null;
             System.out.println("Order processed for client " + client.getUuid() + " for a total of " + totalCost + " euros");
+            // Send a confirmation message to the shop
+            MagasinInterface shop = null;
+            try {
+                shop = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
+                shop.orderConfirmed(client, totalCost);
+    return true;
+            } catch (NotBoundException | MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+
+
         } else {
             throw new RemoteException("Client " + client.getUuid() + " does not have enough money to complete the order");
         }

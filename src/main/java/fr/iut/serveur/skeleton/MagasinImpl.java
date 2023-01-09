@@ -254,7 +254,15 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         // Send the client and total cost to the bank
         return bank.processOrder(client, totalCost);
     }
-    //TODO Banque boolean to magasin / usercontrol
+    public void orderConfirmed(Client client, double totalCost) throws RemoteException {
+        // Update the shop's records
+        System.out.println("Order confirmed on Shop side for client " + client.getUuid() + " for a total of " + totalCost + " euros");
+
+        // Send a confirmation message to the client
+        //ClientInterface clientStub = (ClientInterface) Naming.lookup("rmi://localhost/Client_" + client.getUuid());
+        //clientStub.orderConfirmed(totalCost);
+    }
+
 
 }
 
