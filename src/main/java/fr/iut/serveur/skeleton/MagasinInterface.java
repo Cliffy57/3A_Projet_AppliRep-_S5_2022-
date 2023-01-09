@@ -26,7 +26,7 @@ public interface MagasinInterface extends Remote {
 
     public void addItem2(Produit p)throws RemoteException;
 
-    public void placeOrder(String uuid, double totalCost) throws RemoteException;
+    public boolean placeOrder(String uuid, double totalCost) throws RemoteException;
 
     public void setCurrentUser(Client password) throws RemoteException;
 }

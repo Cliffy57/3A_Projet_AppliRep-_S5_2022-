@@ -4,8 +4,11 @@ import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -110,7 +113,14 @@ public class CtrlPanier {
             client.ConsultePanier();
             totalCost = magasin.calcSommeProduit(client);
             String uuid = client.getUuid();
-            magasin.placeOrder(uuid, totalCost);
+            if(magasin.placeOrder(uuid, totalCost))
+            {
+                modalPaiementConfirme("Paiement confirme");
+            }else {
+                modalPaiementConfirme("Paiement refusé");
+            }
+
+
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -152,6 +162,30 @@ public class CtrlPanier {
         labelNomDuProduit.setText(nomDuProduit+" x "+quantiteReel);
         labelPrixTotalDuProduit.setText(Math.round(valeurDuProduit * quantiteReel) +"€");
 
+    }
+
+
+    private static void modalPaiementConfirme(String message) {
+        // Create a modal dialog
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Order Confirmed");
+
+        dialog.setResizable(false);
+
+        // Create a label to display the message
+        Label label = new Label(message);
+
+        // Create a layout and add the label to it
+        VBox layout = new VBox(10);
+        layout.getChildren().add(label);
+
+        // Create a scene and add the layout to it
+        Scene scene = new Scene(layout);
+
+        // Set the scene and show the dialog
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 
 }

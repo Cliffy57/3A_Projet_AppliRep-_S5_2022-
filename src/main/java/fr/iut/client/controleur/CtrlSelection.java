@@ -9,7 +9,11 @@ import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -87,9 +91,11 @@ public class CtrlSelection implements Initializable {
      * @param actionEvent
      */
     public void actionMagasin2(ActionEvent actionEvent) {
-
+     //   modalPaiementConfirme();
         fermerFenetre();
     }
+
+
 
     /**
      * Ferme la fenêtre

@@ -67,7 +67,7 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
         Transaction transaction = new Transaction(userId);
     }
 
-    public void processOrder(Client client, double totalCost) throws RemoteException {
+    public boolean processOrder(Client client, double totalCost) throws RemoteException {
         // Check if the client has enough money to complete the order
         if (client.getMoney() >= totalCost) {
             client.setMoney(client.getMoney() - totalCost);
@@ -78,4 +78,5 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
             throw new RemoteException("Client " + client.getUuid() + " does not have enough money to complete the order");
         }
     }
+
 }

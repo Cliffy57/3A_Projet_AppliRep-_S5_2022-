@@ -18,5 +18,5 @@ public interface BanqueInterface extends Remote {
 
     void makeTransactionHappen(UUID userId) throws RemoteException;
 
-    void processOrder(Client client, double totalCost) throws RemoteException;
+    boolean processOrder(Client client, double totalCost) throws RemoteException;
 }

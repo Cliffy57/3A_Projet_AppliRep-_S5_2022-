@@ -204,16 +204,20 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         return nomMagasin;
     }
     @Override
-    public void placeOrder(String clientUuid, double totalCost) throws RemoteException {
+    public boolean placeOrder(String clientUuid, double totalCost) throws RemoteException {
         System.out.println("Received order from client with UUID " + clientUuid + " for a total of " + totalCost + " euros");
         // Look up the client by their UUID
         Client client = getCurrentUser();
         System.out.println(client);
         // Send the order to the bank for processing
-        sendOrderToBank(client, totalCost);
+        if(sendOrderToBank(client, totalCost))
+        {
 
-        // Clear the client's cart
-        client.clearCart();
+            // Clear the client's cart
+            client.clearCart();
+            return true;
+        };
+    return false;
     }
 
 
@@ -239,7 +243,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     public Magasin getMagasin(){return mag;}
 
-    public void sendOrderToBank(Client client, double totalCost) throws RemoteException{
+    public boolean sendOrderToBank(Client client, double totalCost) throws RemoteException{
         BanqueInterface bank = null;
         try {
             bank = (BanqueInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Banque+"/java");
@@ -248,7 +252,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         }
 
         // Send the client and total cost to the bank
-        bank.processOrder(client, totalCost);
+        return bank.processOrder(client, totalCost);
     }
     //TODO Banque boolean to magasin / usercontrol
 
