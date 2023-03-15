@@ -42,10 +42,20 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         Init();
     }
 
+    //COnstructeur qui remplacera le constructeur l37 du serveur du main
+    public MagasinImpl(Client currentUser,String nomDuMagasin) throws RemoteException {
+        this.currentUser = currentUser;
+        this.nomMagasin = nomDuMagasin;
+        this.prices = new HashMap<>();
+        this.mag = new Magasin(this.nomMagasin);
+        listeMagasin.add(mag);
+        Init();
+    }
     private void Init()
     {
 
         Magasin m0 = new Magasin("FLUNCH");
+        System.out.println(mag.getNom());//if(mag.getNom()==="shop" ou ")
        DataSet.retourJeuDeDonnees_Magasin1(mag.getListeProduits());
 
     }

@@ -19,7 +19,7 @@ public class VueSelection extends Application {    //Selection du magasin
         stage.setTitle("Choix du magasin!");
         stage.setScene(scene);
         stage.show();
-
+/*
 
         //TODO Classloader
         URL[] urls = {new URL("file:/path/to/your/class/fr/iut/serveur/modeles/Client.class")};
@@ -29,5 +29,6 @@ public class VueSelection extends Application {    //Selection du magasin
 
         Class clientClass = Class.forName("fr.iut.serveur.modeles.Client");
         Client client = (Client) clientClass.newInstance();
+        */
     }
 }
