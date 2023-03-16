@@ -34,11 +34,14 @@ public class Serveur {
         MagasinInterface magasin = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
         magasin.setCurrentUser(new Client("user@email.com", "password"));
         magasin.coClient(magasin.recupereClientActuel());
-        MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel());
+       // MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel());
+        MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel(),"shop");
+        MagasinImpl mag2 = new MagasinImpl(magasin.recupereClientActuel(),"shop2");
 
         registry = LocateRegistry.getRegistry();
         registry.rebind("Magasin", magasin);
-        registry.rebind("shop",mag);
+        registry.rebind(mag.getNom(),mag);
+        registry.rebind(mag2.getNom(),mag2);
         registry.rebind("bank",banq);
 
         //Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));

@@ -119,7 +119,7 @@ public class CtrlMagasin {
     public void lancement()
     {
         chargeLogoPanier();
-        System.out.println(nomMagasin);
+        System.out.println("CtrlMag"+nomMagasin);
         nom_magasin.setText(getNomMagasin());
         chargeproduitdanstableau();
         btnAjoutPanier.setDisable(true);
@@ -134,13 +134,13 @@ public class CtrlMagasin {
             Registry  registry = LocateRegistry.getRegistry();
 
 
-            MagasinInterface  M = (MagasinInterface) registry.lookup("shop");
-            System.out.println(M.consulterListeProduitMagasin("shop"));
+            MagasinInterface  M = (MagasinInterface) registry.lookup(this.nomMagasin);
+            System.out.println(M.consulterListeProduitMagasin(this.nomMagasin));
            // System.out.println(M.consulterListeProduitMagasin("shop").toString());
            // MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
             //System.out.println(M.recupereClientActuel().toString());
             setUserCo(M.recupereClientActuel());
-            //nom_user.setText(userCo.getMel());
+            nom_user.setText(userCo.getMel()+"/"+userCo.getUuid());
 
             ArrayList<Produit> produitsDansMagasin = M.consulterListeProduitMagasin(nomMagasin);
             System.out.println(Arrays.toString(M.consulterListeProduitMagasin(nomMagasin).toArray()));

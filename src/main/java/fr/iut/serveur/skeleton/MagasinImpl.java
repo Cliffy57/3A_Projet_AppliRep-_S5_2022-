@@ -10,6 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
@@ -55,8 +56,14 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     {
 
         Magasin m0 = new Magasin("FLUNCH");
-        System.out.println(mag.getNom());//if(mag.getNom()==="shop" ou ")
-       DataSet.retourJeuDeDonnees_Magasin1(mag.getListeProduits());
+       if(Objects.equals(mag.getNom(), "shop"))
+       {
+           DataSet.retourJeuDeDonnees_Magasin1(mag.getListeProduits());
+       }else if(Objects.equals(mag.getNom(), "shop2"))
+       {
+           DataSet.retourJeuDeDonnees_Magasin2(mag.getListeProduits());
+       }
+
 
     }
 
