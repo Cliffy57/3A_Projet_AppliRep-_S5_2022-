@@ -11,86 +11,118 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.ArrayList;
+import java.util.*;
 
 public class CtrlPanier {
-        //TODO gérer l'insertion de plus de 4 produits dans le panier
-     //Panier d'un client
+
     private ArrayList<Produit> PanierClient = new ArrayList<Produit>(); //Panier d'un client
 
     @FXML private Button boutonRetour;
     @FXML private Button boutonDeConfirmation;
+
+    @FXML private Label lblNomDuProduit1, lblNomDuProduit2, lblNomDuProduit3, lblNomDuProduit4,lblNomDuProduit5, lblNomDuProduit6, lblNomDuProduit7, lblNomDuProduit8, lblNomDuProduit9, lblNomDuProduit10;
+
+    @FXML private Label prixDuProduit1, prixDuProduit2, prixDuProduit3, prixDuProduit4,prixDuProduit5, prixDuProduit6, prixDuProduit7, prixDuProduit8,prixDuProduit9, prixDuProduit10;
+
     @FXML private Label totalDuPanier;
-
-    @FXML private Label lblNomDuProduit1;
-    @FXML private Label lblNomDuProduit2;
-    @FXML private Label lblNomDuProduit3;
-    @FXML private Label lblNomDuProduit4;
-
-    @FXML private Label prixDuProduit1;
-    @FXML private Label prixDuProduit2;
-    @FXML private Label prixDuProduit3;
-    @FXML private Label prixDuProduit4;
-
-
-//FIXME : Le panier est vide lors du premier lancement du panier, faut reset l'affichage pour qu'il recup le panier qui contient les trucs
+    private final Label[] lblNomDuProduit = new Label[10];
+    private final Label[] prixDuProduit = new Label[10];
     public void setPanierCtrl(ArrayList<Produit> a){this.PanierClient=a;}
-    //TODO : Autre manière de faire utiliser l'interface: faire une méthode qui renvoit le panier du client mais je préfère cette methode car si on commence à déclarer tout et n'importe quoi ça va pas le faire même si là c'est dans une zone flou
+
+    /**
+     * Initialise les tableaux contenant tous les labels du gridpane
+     */
+    public void initialize() {
+        lblNomDuProduit[0] = lblNomDuProduit1;
+        lblNomDuProduit[1] = lblNomDuProduit2;
+        lblNomDuProduit[2] = lblNomDuProduit3;
+        lblNomDuProduit[3] = lblNomDuProduit4;
+        lblNomDuProduit[4] = lblNomDuProduit5;
+        lblNomDuProduit[5] = lblNomDuProduit6;
+        lblNomDuProduit[6] = lblNomDuProduit7;
+        lblNomDuProduit[7] = lblNomDuProduit8;
+        lblNomDuProduit[8] = lblNomDuProduit9;
+        lblNomDuProduit[9] = lblNomDuProduit10;
+
+
+        prixDuProduit[0] = prixDuProduit1;
+        prixDuProduit[1] = prixDuProduit2;
+        prixDuProduit[2] = prixDuProduit3;
+        prixDuProduit[3] = prixDuProduit4;
+        prixDuProduit[4] = prixDuProduit5;
+        prixDuProduit[5] = prixDuProduit6;
+        prixDuProduit[6] = prixDuProduit7;
+        prixDuProduit[7] = prixDuProduit8;
+        prixDuProduit[8] = prixDuProduit9;
+        prixDuProduit[9] = prixDuProduit10;
+    }
+
+
+    /**
+     * Met à jour le produit dans la vue si il existe déjà
+     * @param produit
+     * @param counts
+     */
+    public void UpdateProduct(Produit produit, Map<String, Integer> counts) {
+        for (int i = 0; i < lblNomDuProduit.length; i++) {
+
+            String productName = lblNomDuProduit[i].getText();
+            if (productName.length() > 4) {
+                productName = productName.substring(0, productName.length() - 4);
+            }
+            if (productName.equals(produit.getNom())) {
+                // If the product is found, remove it from the view
+                lblNomDuProduit[i].setText("");
+                prixDuProduit[i].setText("");
+                Integer j = counts.get(produit.getNom());
+                afficherContenuDuPanier(lblNomDuProduit[i], prixDuProduit[i], produit.getPrix(), j, produit.getNom());
+            //    System.out.println(produit.getNom()+" erased : "+i);
+                break;
+            }
+        }
+    }
     /**
      * Charge le panier
      */
     public void chargementDuPanier()
     {
         resetContenuPanier();
+        initialize();
         System.out.println("Taille du panier"+PanierClient.size());
         if(PanierClient.isEmpty()) totalDuPanier.setText(String.valueOf(0));
         else
         {
 
-            Map<String, Integer> counts = new HashMap<String,Integer>();  //Liste contenant les produits x quantité
-            Double somme=0.0;
-            //long count = animals.stream().filter(animal -> "bat".equals(animal)).count();
-            for(Produit p : PanierClient)
-            {
-
+            Map<String, Integer> counts = new HashMap<String,Integer>(); // Map containing the products and their quantities
+            Double somme = 0.0;
+            Set<String> printedProducts = new HashSet<>();
+            int index = 0;
+            for (Produit p : PanierClient) {
                 Integer j = counts.get(p.getNom());
                 counts.put(p.getNom(), (j == null) ? 1 : j + 1);
                 somme += p.getPrix();
-                if(j!=null) {
-                    System.out.println("Affichage");
-                   if(counts.size()==1) afficherContenuDuPanier(lblNomDuProduit1, prixDuProduit1,p.getPrix(),j,p.getNom());
-                   else if(counts.size()==2) afficherContenuDuPanier(lblNomDuProduit2, prixDuProduit2,p.getPrix(),j,p.getNom());
-                   else if(counts.size()==3) afficherContenuDuPanier(lblNomDuProduit3, prixDuProduit3,p.getPrix(),j,p.getNom());
-                    System.out.println("Affichage update");
-            }
+
+                // Check if the product has already been printed
+                if (printedProducts.contains(p.getNom())) {
+                    // Product has already been printed, increment the count
+                    UpdateProduct(p,counts);
+                    index--;
+                } else {
+                    // Product has not been printed yet, print it with count 1
+                    afficherContenuDuPanier(lblNomDuProduit[index], prixDuProduit[index], p.getPrix(), 1, p.getNom());
+                    printedProducts.add(p.getNom());
+                }
+
+                // Increment the index
+                index++;
             }
             int valeur= counts.size();
             System.out.println("TEST : "+counts.size());
-            totalDuPanier.setText(String.valueOf(Math.round(somme)));
-
-                for (Map.Entry<String, Integer> val : counts.entrySet()) {  //Pour chaque entry de counts
-                  //  System.out.println(val.getValue()+"/"+val.getKey());
-                   /* if(valeur ==3)contenulignegrid(nomproduit3,prix3,val.getKey().getPrix(),val.getValue(),val.getKey().getNom());
-                    else if(valeur == 2)contenulignegrid(nomproduit2,prix2,val.getKey().getPrix(),val.getValue(),val.getKey().getNom());
-                    else contenulignegrid(nomproduit1,prix1,val.getKey().getPrix(),val.getValue(),val.getKey().getNom());*/
-                    //valeur--;
-                }
-
-
-/*
-                //Pour chaque produit
-            for (Map.Entry<Produit, Integer> val : counts.entrySet()) {
-                      //Faut récupérer le nom fx.id du fxml pour pouvoir set les values
-            }*/
+            totalDuPanier.setText("TOTAL : "+ Math.round(somme) +"€");
 
 
 
@@ -116,13 +148,10 @@ public class CtrlPanier {
             if(magasin.placeOrder(uuid, totalCost))
             {
                 modalPaiementConfirme("Paiement confirme");
-            }else {
-                modalPaiementConfirme("Paiement refusé");
             }
-
-
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            modalPaiementConfirme("Paiement refusé");
+           // throw new RuntimeException(e);
         }
 
 
@@ -140,16 +169,11 @@ public class CtrlPanier {
         stage.close();
     }
 
-    private void resetContenuPanier()//TODO A opti via boucle
-    {
-        lblNomDuProduit1.setText("");
-        prixDuProduit1.setText("");
-        lblNomDuProduit2.setText("");
-        prixDuProduit2.setText("");
-        lblNomDuProduit3.setText("");
-        prixDuProduit3.setText("");
-        lblNomDuProduit4.setText("");
-        prixDuProduit4.setText("");
+    private void resetContenuPanier()
+    {        for (int i = 0; i < 10; i++) {
+            lblNomDuProduit[i].setText("");
+            prixDuProduit[i].setText("");
+        }
     }
 
 
@@ -158,7 +182,7 @@ public class CtrlPanier {
      */
     private void afficherContenuDuPanier(Label labelNomDuProduit, Label labelPrixTotalDuProduit, double valeurDuProduit , int quantiteAjouteAuPanier, String nomDuProduit)
     {
-        int quantiteReel=quantiteAjouteAuPanier+1;  //FIXME  sinon cran en dessous
+        int quantiteReel=quantiteAjouteAuPanier;
         labelNomDuProduit.setText(nomDuProduit+" x "+quantiteReel);
         labelPrixTotalDuProduit.setText(Math.round(valeurDuProduit * quantiteReel) +"€");
 

@@ -165,9 +165,11 @@ public class CtrlMagasin {
      * @param listeProduit : ArrayList de produit à afficher
      */
     private void ChargeImageView(ArrayList<Produit> listeProduit) {//Charge les ImageView du produit Image
+        int v=0;
         for (Produit p :listeProduit) {
-            p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));   //Le produit.class deviendra p.geturl
+            p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/m"+ v +".jpg")).toString())));   //Le produit.class deviendra p.geturl
             p.charge();
+            v++;
         }
     }
 
