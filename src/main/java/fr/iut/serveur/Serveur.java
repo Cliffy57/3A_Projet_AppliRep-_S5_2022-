@@ -16,10 +16,8 @@ public class Serveur {
     public static void main(String[] argv)  //Rappel: Possibilité de mettre les ports en arguments
     {
     try {
-        //MagasinImpl shop = new MagasinImpl("shop");
         BanqueImpl bank = new BanqueImpl("bank");
         Registry registry = LocateRegistry.createRegistry(1099);
-       // registry.rebind("shop",shop);
         registry.rebind("bank",bank);
         System.out.println("Shop server ready.");
         System.out.println("Bank server ready.");
@@ -44,12 +42,6 @@ public class Serveur {
         registry.rebind(mag2.getNom(),mag2);
         registry.rebind("bank",banq);
 
-        //Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));
-        /*System.out.println("Serveur magasin lancé");
-        LocateRegistry.createRegistry(Port_Banque);
-        Naming.rebind("rmi://localhost:"+ Port_Banque+"/java", new BanqueImpl(Port_Banque));
-        System.out.println("Serveur banque lancé");
-*/
     }catch(Exception e) {
         System.out.println("Erreur serveur " + e);
     }

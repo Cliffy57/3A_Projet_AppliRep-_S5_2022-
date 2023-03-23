@@ -1,6 +1,8 @@
 package fr.iut.client.controleur;
 
+import fr.iut.client.vue.VueMagasin;
 import fr.iut.client.vue.VuePanier;
+import fr.iut.client.vue.VueSelection;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
 import fr.iut.serveur.modeles.Ports;
@@ -58,6 +60,8 @@ public class CtrlMagasin {
     @FXML private Label dtsVal;
 
     @FXML private Button btnAjoutPanier;
+
+    @FXML private Button btnRetour;
 
     public String getNomMagasin() {
         return nomMagasin;
@@ -167,9 +171,24 @@ public class CtrlMagasin {
     private void ChargeImageView(ArrayList<Produit> listeProduit) {//Charge les ImageView du produit Image
         int v=0;
         for (Produit p :listeProduit) {
-            p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/m"+ v +".jpg")).toString())));   //Le produit.class deviendra p.geturl
-            p.charge();
-            v++;
+            if(this.nomMagasin.equals("shop"))  //Chargement image du magasin un
+            {
+                p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/m"+ v +".jpg")).toString())));
+                p.charge();
+                v++;
+            }
+            else if(this.nomMagasin.equals("shop2")) //Chargement images du magasin deux
+            {
+                p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/n"+ v +".jpg")).toString())));
+                p.charge();
+                v++;
+            }
+            else    //Image par défaut
+            {
+                p.setImg(new Image((Objects.requireNonNull(Produit.class.getResource("image/bag.jpg")).toString())));   //Le produit.class deviendra p.geturl
+                p.charge();
+            }
+
         }
     }
 
@@ -242,6 +261,20 @@ public class CtrlMagasin {
         dtsDsc.setEditable(false);
         dtsNom.setEditable(false);
         btnAjoutPanier.setDisable(false);
+    }
+
+    /**
+     * Action du bouton retour
+     */
+    public void retourMenu()
+    {
+        Stage stage = (Stage) btnRetour.getScene().getWindow();
+        stage.close();
+        try {
+            new VueSelection().start(new Stage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
