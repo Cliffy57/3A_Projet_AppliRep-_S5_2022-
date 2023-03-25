@@ -7,7 +7,6 @@ import java.util.UUID;
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class Client implements Serializable {//Note: Ajout du serializable car export dans l'interface
-            //TODO Pour le problème de plusieurs produits identiques dans le panier, on fera le traitement au niveau du ctrlmagasin
     private int idClient; //Id d'un client
     private String melClient;
     private String mdpClient;

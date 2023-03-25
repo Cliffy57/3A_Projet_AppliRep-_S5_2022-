@@ -1,4 +1,4 @@
-package fr.iut.serveur.modeles;
+package fr.iut.serveur.modeles.outils;
 
 public final class Ports {
     public static final int Port_Magasin = 8000;

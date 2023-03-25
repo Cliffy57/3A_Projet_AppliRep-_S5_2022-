@@ -16,7 +16,7 @@ public class VueSelection extends Application {    //Selection du magasin
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/inter1.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
-        stage.setTitle("Choix du magasin!");
+        stage.setTitle("Choix du magasin");
         stage.setScene(scene);
         stage.show();
     }

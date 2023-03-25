@@ -1,11 +1,10 @@
 package fr.iut.client.controleur;
 
-import fr.iut.client.vue.VueMagasin;
 import fr.iut.client.vue.VuePanier;
 import fr.iut.client.vue.VueSelection;
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Produit;
-import fr.iut.serveur.modeles.Ports;
+import fr.iut.serveur.modeles.outils.Ports;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Magasin implements Serializable {
     String nomDuMagasin;
-    String url;//Url du logo
     public ArrayList<Produit> ListeProduits = new ArrayList<Produit>();
     public static ArrayList<Client> listeClient = new ArrayList<Client>();
 
@@ -25,21 +24,6 @@ public class Magasin implements Serializable {
         return ListeProduits;
     }
 
-    public void setListeProduits(ArrayList<Produit> listeProduits) {
-        ListeProduits = listeProduits;
-    }
-
-
-
-    public void ajouterProduitMagasin(Produit p)
-    {
-        ListeProduits.add(p);//TODO si le produit existe déjà ne peut pas l'ajouter
-    }
-
-    public void supprimerProduitMagasin(Produit p)
-    {
-        ListeProduits.remove(p);
-    }
 
     /**
      * Ajoute un client à la liste des clients existants d'un magasin

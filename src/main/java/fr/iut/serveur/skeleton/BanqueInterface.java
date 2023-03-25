@@ -8,7 +8,6 @@ package fr.iut.serveur.skeleton;
         import java.util.UUID;
 
 public interface BanqueInterface extends Remote {
-    //public void confirmClientId(Client client);
     public void verifyClient(Client client)throws RemoteException;
 
     double getTransactionAmount(Order order) throws RemoteException;

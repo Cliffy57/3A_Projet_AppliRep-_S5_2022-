@@ -80,7 +80,7 @@ public class CtrlPanier {
                 prixDuProduit[i].setText("");
                 Integer j = counts.get(produit.getNom());
                 afficherContenuDuPanier(lblNomDuProduit[i], prixDuProduit[i], produit.getPrix(), j, produit.getNom());
-            //    System.out.println(produit.getNom()+" erased : "+i);
+
                 break;
             }
         }
@@ -93,7 +93,11 @@ public class CtrlPanier {
         resetContenuPanier();
         initialize();
         System.out.println("Taille du panier"+PanierClient.size());
-        if(PanierClient.isEmpty()) totalDuPanier.setText(String.valueOf(0));
+        if(PanierClient.isEmpty())
+        {
+            totalDuPanier.setText(String.valueOf(0));
+            this.boutonDeConfirmation.setDisable(true);
+        }
         else
         {
 

@@ -22,17 +22,6 @@ public class Produit implements Serializable {
         this.categorie = categorie;
     }
 
-    public Produit( String nom, String description, String prix) {//Si caté vide alors caté == "vide"
-        this.nom = nom;
-        this.description = description;
-        this.prix = Double.valueOf(prix);
-        this.categorie = categorie;
-    }
-
-
-
-
-
     public String getCategorie() {
         return categorie;
     }

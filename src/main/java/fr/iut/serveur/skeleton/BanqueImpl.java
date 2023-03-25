@@ -2,13 +2,8 @@ package fr.iut.serveur.skeleton;
 
 import fr.iut.serveur.modeles.Client;
 import fr.iut.serveur.modeles.Order;
-import fr.iut.serveur.modeles.Ports;
+import fr.iut.serveur.modeles.outils.Ports;
 import fr.iut.serveur.modeles.Transaction;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

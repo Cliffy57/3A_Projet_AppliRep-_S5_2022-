@@ -1,7 +1,7 @@
 package fr.iut.serveur;
 
 import fr.iut.serveur.modeles.Client;
-import fr.iut.serveur.modeles.Ports;
+import fr.iut.serveur.modeles.outils.Ports;
 import fr.iut.serveur.skeleton.BanqueImpl;
 import fr.iut.serveur.skeleton.BanqueInterface;
 import fr.iut.serveur.skeleton.MagasinImpl;
@@ -32,7 +32,6 @@ public class Serveur {
         MagasinInterface magasin = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
         magasin.setCurrentUser(new Client("user@email.com", "password"));
         magasin.coClient(magasin.recupereClientActuel());
-       // MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel());
         MagasinImpl mag = new MagasinImpl(magasin.recupereClientActuel(),"shop");
         MagasinImpl mag2 = new MagasinImpl(magasin.recupereClientActuel(),"shop2");
 

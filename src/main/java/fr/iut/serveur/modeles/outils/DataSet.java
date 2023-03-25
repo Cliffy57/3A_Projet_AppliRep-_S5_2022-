@@ -1,4 +1,6 @@
-package fr.iut.serveur.modeles;
+package fr.iut.serveur.modeles.outils;
+
+import fr.iut.serveur.modeles.Produit;
 
 import java.util.ArrayList;
 

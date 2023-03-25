@@ -1,25 +1,17 @@
 package fr.iut.client.controleur;
 
 import fr.iut.client.vue.VueMagasin;
-import fr.iut.client.vue.VuePanier;
-import fr.iut.serveur.modeles.Magasin;
-import fr.iut.serveur.modeles.Produit;
 import fr.iut.serveur.skeleton.BanqueImpl;
 import fr.iut.serveur.skeleton.MagasinInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UID;

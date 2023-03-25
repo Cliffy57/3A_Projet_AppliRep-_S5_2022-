@@ -1,6 +1,8 @@
 package fr.iut.serveur.skeleton;
 
 import fr.iut.serveur.modeles.*;
+import fr.iut.serveur.modeles.outils.DataSet;
+import fr.iut.serveur.modeles.outils.Ports;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -34,16 +36,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
         listeMagasin.add(mag);
         Init();
     }
-    public MagasinImpl(Client currentUser) throws RemoteException {
-        this.currentUser = currentUser;
-        this.nomMagasin = "shop";
-        this.prices = new HashMap<>();
-        this.mag = new Magasin(this.nomMagasin);
-        listeMagasin.add(mag);
-        Init();
-    }
 
-    //COnstructeur qui remplacera le constructeur l37 du serveur du main
     public MagasinImpl(Client currentUser,String nomDuMagasin) throws RemoteException {
         this.currentUser = currentUser;
         this.nomMagasin = nomDuMagasin;
@@ -63,7 +56,6 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
        {
            DataSet.retourJeuDeDonnees_Magasin2(mag.getListeProduits());
        }
-
 
     }
 
@@ -101,7 +93,6 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
                ArrayList<Produit> listeProduits=  m.getListeProduits();
                 for(Produit p : listeProduits)
                 {
-                    System.out.println(p.getCategorie());
                     P.add(p);
                 }
             }
@@ -110,7 +101,6 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
 
     }
 
-    //TODO Fonction à renforcer via mdp
     /**
      * Vérifie si un client est présent dans la liste des clients
      * @param mel : Adresse mel du client
@@ -199,22 +189,8 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     return false;
     }
 
-
-    @Override
-    public void addItem(String item, double price) {
-        prices.put(item, price);
-    }
-
-    @Override
-    public void addItem2(Produit p ) throws RemoteException {
-        mag.ajouterProduitMagasin(p);
-        System.out.println("Produit ajouté");
-        System.out.println(mag.toString());
-        System.out.println(mag.getListeProduits().toString());
-    }
     public void setCurrentUser(Client currentUser) {
         this.currentUser = currentUser;
-        System.out.println("Setter "+this.currentUser.getUuid());
     }
     public Client getCurrentUser() {
         return currentUser;

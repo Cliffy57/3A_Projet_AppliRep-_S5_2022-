@@ -10,4 +10,5 @@ module fr.iut.projet {
     exports fr.iut.serveur.skeleton;
     exports fr.iut.client.vue;
     exports fr.iut.client.controleur;
+    exports fr.iut.serveur.modeles.outils;
 }
