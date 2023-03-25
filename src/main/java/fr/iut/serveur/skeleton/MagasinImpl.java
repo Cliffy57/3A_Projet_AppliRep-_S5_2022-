@@ -47,9 +47,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     }
     private void Init()
     {
-
-        Magasin m0 = new Magasin("FLUNCH");
-       if(Objects.equals(mag.getNom(), "shop"))
+        if(Objects.equals(mag.getNom(), "shop"))
        {
            DataSet.retourJeuDeDonnees_Magasin1(mag.getListeProduits());
        }else if(Objects.equals(mag.getNom(), "shop2"))
