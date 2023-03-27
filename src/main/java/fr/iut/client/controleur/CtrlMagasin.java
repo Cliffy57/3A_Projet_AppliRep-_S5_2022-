@@ -84,7 +84,6 @@ public class CtrlMagasin {
         {
             MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
             System.out.println("VuePanier:"+userCo.toString());
-            System.out.println("l83:"+userCo.hashCode());
             userCo.ConsultePanier();
             System.out.println((M.recupereClientActuel()));
 
@@ -267,6 +266,7 @@ public class CtrlMagasin {
         Stage stage = (Stage) btnRetour.getScene().getWindow();
         stage.close();
         try {
+            userCo.clearCart();
             new VueSelection().start(new Stage());
         } catch (IOException e) {
             throw new RuntimeException(e);

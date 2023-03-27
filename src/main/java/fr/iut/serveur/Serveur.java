@@ -13,7 +13,7 @@ import java.rmi.registry.Registry;
 
 public class Serveur {
 
-    public static void main(String[] argv)  //Rappel: Possibilité de mettre les ports en arguments
+    public static void main(String[] argv)
     {
     try {
         BanqueImpl bank = new BanqueImpl("bank");

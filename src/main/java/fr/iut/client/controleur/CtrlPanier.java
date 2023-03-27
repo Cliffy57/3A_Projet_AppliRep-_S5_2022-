@@ -95,7 +95,7 @@ public class CtrlPanier {
         System.out.println("Taille du panier"+PanierClient.size());
         if(PanierClient.isEmpty())
         {
-            totalDuPanier.setText(String.valueOf(0));
+            totalDuPanier.setText("Total : " +0+"€");
             this.boutonDeConfirmation.setDisable(true);
         }
         else
@@ -124,12 +124,7 @@ public class CtrlPanier {
                 // Increment the index
                 index++;
             }
-            int valeur= counts.size();
-            System.out.println("TEST : "+counts.size());
             totalDuPanier.setText("TOTAL : "+ Math.round(somme) +"€");
-
-
-
         }
     }
     //Envoye le panier au magasin
@@ -151,11 +146,12 @@ public class CtrlPanier {
             String uuid = client.getUuid();
             if(magasin.placeOrder(uuid, totalCost))
             {
-                modalPaiementConfirme("Paiement confirme");
+                client.setMoney(client.getMoney()-totalCost);//Met à jour le solde du client
+                modalPaiementConfirme("Paiement confirme. \n Solde Restant :"+client.getMoney());
+
             }
         } catch (RemoteException e) {
-            modalPaiementConfirme("Paiement refusé");
-           // throw new RuntimeException(e);
+            modalPaiementConfirme("Paiement refusé \n Solde insuffisant ! ");
         }
 
 
