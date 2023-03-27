@@ -7,14 +7,12 @@ import java.util.UUID;
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
 public class Client implements Serializable {
-    private int idClient; //Id d'un client
     private String melClient;
     private String mdpClient;
-    private String soldeDuClient; //Solde du compte bancaire d'un client
     private String codebancaire;    //Numéro de code bancaire du client
-    private String idBancaire; //Id de la banque du client
+    private String idBancaire;      //Id de la banque du client
     private UUID uuid;
-    private double money = 5;
+    private double money = 50;
 
 
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
@@ -24,19 +22,10 @@ public class Client implements Serializable {
     {
         if(!mel.isEmpty()&&!mdp.isEmpty())
         {
-            this.idClient =listeClient.size()+1;
             this.melClient =mel.trim();
             this.mdpClient =mdp.trim();
             this.uuid = UUID.randomUUID();
         }else throw new IllegalArgumentException("Le champ mail ou mdp est vide");
-    }
-
-    public int getId() {
-        return idClient;
-    }
-
-    public void setId(int id) {
-        this.idClient = id;
     }
 
     public String getMel() {
@@ -55,13 +44,6 @@ public class Client implements Serializable {
         this.mdpClient = mdp;
     }
 
-    public String getSolde() {
-        return soldeDuClient;
-    }
-
-    public void setSolde(String solde) {
-        this.soldeDuClient = solde;
-    }
 
     public ArrayList<Produit> getPanier() {
         return Panier;
@@ -124,7 +106,10 @@ public class Client implements Serializable {
         Panier = panier;
     }
     public void clearCart() {
-        Panier.clear();
+        if(!Panier.isEmpty())
+        {
+            Panier.clear();
+        }
     }
     public double getMoney() {
         return this.money;

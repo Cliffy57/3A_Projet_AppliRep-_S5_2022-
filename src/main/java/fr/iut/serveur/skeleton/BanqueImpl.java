@@ -83,7 +83,7 @@ public class BanqueImpl extends UnicastRemoteObject implements BanqueInterface {
             try {
                 shop = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
                 shop.orderConfirmed(client, totalCost);
-    return true;
+                 return true;
             } catch (NotBoundException | MalformedURLException e) {
                 throw new RuntimeException(e);
             }

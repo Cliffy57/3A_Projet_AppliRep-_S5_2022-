@@ -139,7 +139,7 @@ public class CtrlMagasin {
             MagasinInterface  M = (MagasinInterface) registry.lookup(this.nomMagasin);
             System.out.println(M.consulterListeProduitMagasin(this.nomMagasin));
             setUserCo(M.recupereClientActuel());
-            nom_user.setText(userCo.getMel()+"/"+userCo.getUuid());
+            nom_user.setText(userCo.getMel());
 
             ArrayList<Produit> produitsDansMagasin = M.consulterListeProduitMagasin(nomMagasin);
             System.out.println(Arrays.toString(M.consulterListeProduitMagasin(nomMagasin).toArray()));

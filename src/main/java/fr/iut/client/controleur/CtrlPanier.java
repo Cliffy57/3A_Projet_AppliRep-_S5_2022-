@@ -147,11 +147,11 @@ public class CtrlPanier {
             if(magasin.placeOrder(uuid, totalCost))
             {
                 client.setMoney(client.getMoney()-totalCost);//Met à jour le solde du client
-                modalPaiementConfirme("Paiement confirme. \n Solde Restant :"+client.getMoney());
+                modalPaiementConfirme("Paiement confirme. \nSolde Restant :"+client.getMoney());
 
             }
         } catch (RemoteException e) {
-            modalPaiementConfirme("Paiement refusé \n Solde insuffisant ! ");
+            modalPaiementConfirme("Paiement refusé \nSolde insuffisant ! ");
         }
 
 

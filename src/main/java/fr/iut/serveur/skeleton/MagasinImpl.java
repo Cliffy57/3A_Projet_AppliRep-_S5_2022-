@@ -72,7 +72,6 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
     public void ajoutProduit(Produit p) throws RemoteException {
         currentUser.AjouterPanier(p);
         System.out.println("Produit Ajouté pour le client:"+ currentUser.getMel()+"/"+currentUser.getUuid());
-        System.out.println("Nb element impl="+currentUser.getPanier().size());
     }
 
     @Override
