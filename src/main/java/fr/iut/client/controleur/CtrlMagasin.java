@@ -139,9 +139,6 @@ public class CtrlMagasin {
 
             MagasinInterface  M = (MagasinInterface) registry.lookup(this.nomMagasin);
             System.out.println(M.consulterListeProduitMagasin(this.nomMagasin));
-           // System.out.println(M.consulterListeProduitMagasin("shop").toString());
-           // MagasinInterface M = (MagasinInterface) Naming.lookup("rmi://localhost:"+ Ports.Port_Magasin+"/java");
-            //System.out.println(M.recupereClientActuel().toString());
             setUserCo(M.recupereClientActuel());
             nom_user.setText(userCo.getMel()+"/"+userCo.getUuid());
 

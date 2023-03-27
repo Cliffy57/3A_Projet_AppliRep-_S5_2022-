@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Vue du panier
+ */
 public class VuePanier extends Application {
      Client clientDuPanier;
      public VuePanier(Client client)

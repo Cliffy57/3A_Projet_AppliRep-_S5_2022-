@@ -162,17 +162,23 @@ public class CtrlPanier {
 
     }
 
+    /**
+     * Action du bouton retour
+     */
     public void btnRetourAction()
     {
         fermerFenetre(boutonRetour);
     }
 
-    private void fermerFenetre(Button btn)   //Possibilité de micheliser tout ça avec juste un attribut Button btn
+    private void fermerFenetre(Button btn)
     {
         Stage stage=(Stage) btn.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Mets tous les labels à vide
+     */
     private void resetContenuPanier()
     {        for (int i = 0; i < 10; i++) {
             lblNomDuProduit[i].setText("");
@@ -192,12 +198,15 @@ public class CtrlPanier {
 
     }
 
-
+    /**
+     * Affiche la modal de paiement
+     * @param message : Soit affiche paiement confirmé si le paiement a été effectué sinon affiche paiement refusé
+     */
     private static void modalPaiementConfirme(String message) {
         // Create a modal dialog
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setTitle("Order Confirmed");
+        dialog.setTitle("Etat de votre commande");
 
         dialog.setResizable(false);
 

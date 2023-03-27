@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import static fr.iut.serveur.modeles.Magasin.listeClient;
 
-public class Client implements Serializable {//Note: Ajout du serializable car export dans l'interface
+public class Client implements Serializable {
     private int idClient; //Id d'un client
     private String melClient;
     private String mdpClient;
     private String soldeDuClient; //Solde du compte bancaire d'un client
     private String codebancaire;    //Numéro de code bancaire du client
-    private String idBancaire; //Id de la banque du client (à voir jusqu'où on va dans le projet)
+    private String idBancaire; //Id de la banque du client
     private UUID uuid;
     private double money = 5;
 
@@ -20,7 +20,7 @@ public class Client implements Serializable {//Note: Ajout du serializable car e
     private ArrayList<Produit> Panier = new ArrayList<Produit>(); //Panier d'un client
 
 
-    public Client(String mel, String mdp)  //La renforcer en mode michel après
+    public Client(String mel, String mdp)
     {
         if(!mel.isEmpty()&&!mdp.isEmpty())
         {

@@ -54,16 +54,9 @@ public class CtrlSelection implements Initializable {
 
                 BanqueImpl bank = new BanqueImpl("8001");
 
-             //   Shop.coClient(Shop.recupereClientActuel());
-              //  shop.addItem("pen", 0.99);
-
-                // Invoke the remote methods
-                UID clientId = new UID();   //Ca sera notre classe User après
+                UID clientId = new UID();
                 System.out.println("Client ID: " + clientId);
-                // String name = shop.getName();
-             //   double price = shop.getPrice("book");
-            //    shop.placeOrder(String.valueOf(clientId)); validePanier
-             //   shop.order("book");
+
                 new VueMagasin("shop").start(new Stage());
                 
                 fermerFenetre();
@@ -81,7 +74,6 @@ public class CtrlSelection implements Initializable {
      * @param actionEvent
      */
     public void actionMagasin2(ActionEvent actionEvent) {
-     //   modalPaiementConfirme();
         try {
             Registry  registry = LocateRegistry.getRegistry();
 
@@ -93,16 +85,8 @@ public class CtrlSelection implements Initializable {
 
             BanqueImpl bank = new BanqueImpl("8001");
 
-            //   Shop.coClient(Shop.recupereClientActuel());
-            //  shop.addItem("pen", 0.99);
-
-            // Invoke the remote methods
-            UID clientId = new UID();   //Ca sera notre classe User après
+            UID clientId = new UID();
             System.out.println("Client ID: " + clientId);
-            // String name = shop.getName();
-            //   double price = shop.getPrice("book");
-            //    shop.placeOrder(String.valueOf(clientId)); validePanier
-            //   shop.order("book");
             new VueMagasin("shop2").start(new Stage());
 
             fermerFenetre();
