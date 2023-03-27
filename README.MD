@@ -2,6 +2,8 @@
 
 Projet Application Repartie LPGL DI PAOLO - LEDUC
 
+![image](https://user-images.githubusercontent.com/73029436/227964745-a49ed81d-16a8-4dd4-9bf8-cae382e6e7bb.png)
+
 ![image](https://user-images.githubusercontent.com/73029436/227964566-b5070f2a-b0f3-41de-9897-b8c639ab62eb.png)
 
 ![image](https://user-images.githubusercontent.com/73029436/227964599-57d2035e-2898-4477-b062-271ee94ee393.png)
@@ -14,4 +16,3 @@ Projet Application Repartie LPGL DI PAOLO - LEDUC
 
 ![image](https://user-images.githubusercontent.com/73029436/227964726-e0970fa6-eb99-4b1c-8902-f142d236b380.png)
 
-![image](https://user-images.githubusercontent.com/73029436/227964745-a49ed81d-16a8-4dd4-9bf8-cae382e6e7bb.png)
