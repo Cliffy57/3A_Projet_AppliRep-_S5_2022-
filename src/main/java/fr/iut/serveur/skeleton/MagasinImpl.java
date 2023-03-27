@@ -55,7 +55,7 @@ public class MagasinImpl extends UnicastRemoteObject implements MagasinInterface
            DataSet.retourJeuDeDonnees_Magasin2(mag.getListeProduits());
        }
 
-    }
+    }//TODO FAIRE UN INIT EN DEHORS DE CETTE CLASSE ET CALL CETTE FONCTION GENRE LA RENDRE STATIC MEC
 
     @Override
     public boolean coClient(Client c) throws RemoteException {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public interface MagasinInterface extends Remote {
 
 
+
     public boolean coClient(Client c) throws RemoteException;   //Connecte un client au magasin
     public void ajoutProduit(Produit p )throws RemoteException; //Ajoute un produit au panier du client
     public void consulterPanier() throws RemoteException;   //Consulte le panier d'un client
@@ -21,6 +22,8 @@ public interface MagasinInterface extends Remote {
     double getPrice(String item) throws RemoteException;    //Affiche le prix d'un produit d'une commande
     void order(String item) throws RemoteException;
     String getnom() throws  RemoteException; //Récupère le nom du magasin
+
+ 
 
     public boolean placeOrder(String uuid, double totalCost) throws RemoteException; //Crée une commande
 
